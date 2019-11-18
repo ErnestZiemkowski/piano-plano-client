@@ -1,0 +1,41 @@
+.wrapper {
+    display: flex;
+    height: 100vh;
+
+    .image-background {
+        background-size: cover;
+        background-image: url("https://source.unsplash.com/random");
+        background-repeat: no-repeat;
+        background-position: center;
+        flex: .8;
+    }
+
+    .register-form {
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        flex: .5;   
+    }
+
+    .form-title {
+        margin: 1em 0;
+    }
+
+    .form {
+        width: 100%;
+        padding: 0 4em;
+    }
+    
+}
+
+@media (max-width: 600px) {
+    .wrapper {
+        display: initial;
+        background-color: lawngreen;
+
+    .image-background {
+        height: 40vh;
+    }
+
+    }
+}
