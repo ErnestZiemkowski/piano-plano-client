@@ -12,9 +12,9 @@ import store from './store';
 import { setCurrentUser, logout } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
-import Register from './components/auth/Register/Register';
-import Login from './components/auth/Login/Login';
-import Dashboard from './components/Dashboard';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+import Dashboard from './components/dashboard';
 import PrivateRoute from './components/common/PrivateRoute';
 
 
@@ -25,7 +25,7 @@ if(localStorage.jwtToken) {
   store.dispatch(setCurrentUser(decoded));
   
   const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
+  if (decoded.exp > currentTime) {
     store.dispatch(logout());
     window.location.href = ".#/login";
   }

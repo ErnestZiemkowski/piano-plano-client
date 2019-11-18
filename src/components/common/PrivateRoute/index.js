@@ -2,14 +2,16 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";    
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Loader from "react-loaders";
+
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     <Route
         {...rest}
         render={props => {
-            // if(auth.isLoading) {
-            //     return <h2>Loading...</h2>;
-            // } else 
+            if(auth.isLoading) {
+                return <Loader type="ball-scale-multiple" active />
+            } else 
             if (auth.isAuthenticated) {
                 return <Component {...props} />;
             } else {
@@ -18,7 +20,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     />
 );
 
-PrivateRoute.propTypes= {
+PrivateRoute.propTypes = {
     auth: PropTypes.object,
 }
 

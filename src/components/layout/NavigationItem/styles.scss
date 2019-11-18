@@ -1,0 +1,11 @@
+.navigation-item-wrapper {
+    padding: 1em;
+
+    span {
+        padding: 0 1.5em;
+    }
+
+    &:hover {
+        background-color: rgba(245, 245, 245, .4);
+    }
+}
