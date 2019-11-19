@@ -10,7 +10,8 @@ export default class NavigationBar extends Component {
                 <NavigationItem icon="fas fa-briefcase" itemTopic="Dashboard" />
                 <NavigationItem icon="fas fa-table" itemTopic="Agile Board" />
                 <NavigationItem icon="fas fa-medal" itemTopic="Daily Goals" />
-                <NavigationItem icon="fas fa-user" itemTopic="Profile" /> 
+                <NavigationItem icon="fas fa-user" itemTopic="Profile" />
+                <NavigationItem icon="fas fa-power-off" itemTopic="Logout" />
             </div>
         )    
     }

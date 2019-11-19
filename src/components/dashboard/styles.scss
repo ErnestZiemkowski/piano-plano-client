@@ -4,4 +4,9 @@
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
+    display: flex;
+
+    .content-wrapper {
+        flex-grow: 2;
+    }
 }

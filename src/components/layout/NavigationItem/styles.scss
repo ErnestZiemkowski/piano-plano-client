@@ -9,3 +9,13 @@
         background-color: rgba(245, 245, 245, .4);
     }
 }
+
+@media (max-width: 600px) {
+
+    .navigation-item-wrapper {
+        span {
+            padding: 0 .5em;
+        }    
+    
+    }
+}
