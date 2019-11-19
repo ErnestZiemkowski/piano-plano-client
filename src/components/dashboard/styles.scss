@@ -8,5 +8,14 @@
 
     .content-wrapper {
         flex-grow: 2;
+        width: 100%;
+        .background-board {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2em;
+            background-color: rgba(245, 245, 245, .8);
+            min-height: 80vh;
+        }
     }
 }

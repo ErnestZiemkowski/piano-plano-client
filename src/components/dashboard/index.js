@@ -11,6 +11,9 @@ export default class Dashboard extends Component {
                 <NavigationBar />
                 <div className="content-wrapper">
                     <Header/>
+                    <div className="background-board">
+                        <span><i class="fas fa-plus-circle fa-5x"></i></span>
+                    </div>
                 </div>
             </div>
         )
