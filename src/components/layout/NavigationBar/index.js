@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
-import './styles.scss';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import NavigationItem from '../NavigationItem';
+import { logout } from '../../../actions/auth';
 
-export default class NavigationBar extends Component {
+import './styles.scss';
+
+class NavigationBar extends Component {
+
+    handleLogout = () => {
+        this.props.logout();
+    }
+
     render() {
         return (
             <div className="navigation-bar-wrapper">
@@ -11,8 +20,14 @@ export default class NavigationBar extends Component {
                 <NavigationItem icon="fas fa-table" itemTopic="Agile Board" />
                 <NavigationItem icon="fas fa-medal" itemTopic="Daily Goals" />
                 <NavigationItem icon="fas fa-user" itemTopic="Profile" />
-                <NavigationItem icon="fas fa-power-off" itemTopic="Logout" />
+                <NavigationItem onClickHandler={this.handleLogout} icon="fas fa-power-off" itemTopic="Logout" />
             </div>
         )    
     }
 }
+
+NavigationBar.propTypes = {
+    logout: PropTypes.func.isRequired,
+}
+
+export default connect(null, { logout })(NavigationBar);

@@ -5,5 +5,10 @@ module.exports = {
         register: backendURI + "/api/auth/signup",
         login: backendURI + "/api/auth/signin",
         loggedUser: backendURI + "/api/auth/user/me"
+    },
+    projects: {
+        getAll: backendURI + "/api/projects",
+        deleteById: backendURI + "/api/projects",
+        create: backendURI + "/api/projects"
     }
 }

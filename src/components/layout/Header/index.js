@@ -1,25 +1,50 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import "./styles.scss";
 import { connect } from 'react-redux';
 
+import './styles.scss';
+import { daysNames, monthNames } from '../../../utils/dateTime';
 
-const today = new Date();
-const dd = String(today.getDate()).padStart(2, '0');
-const mm = String(today.getMonth() + 1).padStart(2, '0');
-const yyyy = today.getFullYear();
-const dayOfWeek = today.getDay();
 
-const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const daysNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+class Header extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            date: new Date()
+        };
+    }
 
-const Header = props => (
-    <div className="header">
-        <span className="text-light">Welcome back, {props.userName}</span>                
-        <span className="text-light">{daysNames[dayOfWeek]}, {dd} {monthNames[mm - 1]} {yyyy}</span>
-    </div>
-);
+    tick() {
+        this.setState({
+            date: new Date()
+        });
+    }
+
+    componentDidMount() {
+        this.timerID = setInterval(() => this.tick(), 1000);
+    }
+    
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+    
+
+    render() {
+        const { userName } = this.props;
+        const { date } = this.state;
+        let time = date.toLocaleTimeString();
+        time = time.substring(0, 5)
+
+        return (
+            <div className="header">
+                <span className="text-light">Welcome back, {userName}</span>
+                <span className="text-light">{ time }</span>                
+                <span className="text-light">{daysNames[date.getDay()]}, {date.getDay()} {monthNames[date.getMonth()]} {date.getFullYear()}</span>
+            </div>
+        );
+    }    
+}
 
 Header.propTypes = {
     userName: PropTypes.string.isRequired, 
