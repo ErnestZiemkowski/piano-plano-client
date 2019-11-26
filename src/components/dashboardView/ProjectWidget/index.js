@@ -6,6 +6,7 @@ import './styles.scss';
 import { daysNames, monthNames } from '../../../utils/dateTime';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import { deleteProject } from '../../../actions/projects';
+import { openProjectDetailSidebarById } from '../../../actions/layout';
 
 
 class ProjectWidget extends Component {
@@ -28,7 +29,7 @@ class ProjectWidget extends Component {
     }
 
     render() {
-        const { startDate, name } = this.props;
+        const { startDate, name, id } = this.props;
         const { isModalOpen } = this.state;
         const d = new Date(Date.parse(startDate));
 
@@ -38,6 +39,7 @@ class ProjectWidget extends Component {
                     <div className="project-details">
                         <h2 className="project-name">{ name }</h2>
                         <div className="project-actions">
+                            <i onClick={() => this.props.openProjectDetailSidebarById(id)} className="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Show details about project"/>
                             <i className="fas fa-arrow-circle-right" data-toggle="tooltip" data-placement="top" title="Go to project agile board"/>
                             <i onClick={this.toggleModal} className="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Delete project"/>
                         </div>
@@ -80,6 +82,7 @@ ProjectWidget.propTypes = {
     startDate: PropTypes.string,
     name: PropTypes.string,
     deleteProject: PropTypes.func.isRequired,
+    openProjectDetailSidebarById: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteProject })(ProjectWidget);
+export default connect(null, { deleteProject, openProjectDetailSidebarById })(ProjectWidget);

@@ -7,7 +7,8 @@ import {
     GET_ERRORS, 
     PROJECTS_LOADING,
     DELETE_PROJECT,
-    CREATE_PROJECT
+    CREATE_PROJECT,
+    UPDATE_PROJECT
 } from './types';
 
 export const getAllProjects = () => dispatch => {
@@ -57,7 +58,6 @@ export const createProject = projectData => dispatch => {
     axios
         .post(api.projects.create, projectData)
         .then(res => {
-            console.log(res);
             dispatch({
                 type: CREATE_PROJECT,
                 payload: res.data
@@ -67,7 +67,27 @@ export const createProject = projectData => dispatch => {
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data
-            });    
+            });
         });
         
 };
+
+export const updateProject = (projectData, id) => dispatch => {
+
+    setAuthToken(localStorage.getItem("jwtToken"));
+    axios
+        .put(api.projects.update(id), projectData)
+        .then(res => {
+            dispatch({
+                type: UPDATE_PROJECT,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+
+}

@@ -8,7 +8,8 @@ import "./styles.scss";
 import NavigationBar from "../../layout/NavigationBar";
 import Header from "../../layout/Header";
 import ProjectWidget from "../ProjectWidget";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import ProjectInfo from '../ProjectInfo';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { getAllProjects, createProject } from "../../../actions/projects"
 
 class Dashboard extends Component {
@@ -17,7 +18,7 @@ class Dashboard extends Component {
         this.state = {
             isModalOpen: false,
             name: '',
-            description: '',    
+            description: '',
         }
     }
 
@@ -44,17 +45,15 @@ class Dashboard extends Component {
         this.props.createProject(projectData);
         this.toggleModal();
     }
-    
-    render() {
-        const { projects } = this.props;
-        const { isModalOpen } = this.state;
-        const { name, description } = this.state;
 
+    render() {
+        const { projects, projectIdSidebarDetails } = this.props;
+        const { name, description, isModalOpen } = this.state;
         return (
             <div className="image-wrapper">
                 <NavigationBar />
                 <div className="content-wrapper">
-                    <Header/>
+                    <Header />
                     <div className="background-board">
                         <div className="projects-board-actions">
                             <span onClick={this.toggleModal} className="badge badge-dark" data-toggle="tooltip" data-placement="bottom" title="Create new project">
@@ -69,6 +68,8 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
+                { projectIdSidebarDetails === -1 ? '' : <ProjectInfo projectId={projectIdSidebarDetails} />}
+
                 <Modal 
                     isOpen={isModalOpen}
                     toggle={this.toggleModal}
@@ -116,10 +117,12 @@ Dashboard.propTypes = {
         isLoading: PropTypes.bool.isRequired,
         data: PropTypes.array,
     }).isRequired,
+    projectIdSidebarDetails: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
-    projects: state.projects
+    projects: state.projects,
+    projectIdSidebarDetails: state.layout.projectId
 });
 
 export default connect(mapStateToProps, { getAllProjects, createProject })(Dashboard);

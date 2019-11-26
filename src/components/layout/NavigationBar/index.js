@@ -14,8 +14,10 @@ class NavigationBar extends Component {
     }
 
     render() {
+        const { isNavigationSidebarOpen } = this.props;
+        
         return (
-            <div className="navigation-bar-wrapper">
+            <div className={`navigation-bar-wrapper ${isNavigationSidebarOpen ? '' : 'd-none'}`}>
                 <NavigationItem icon="fas fa-briefcase" itemTopic="Dashboard" />
                 <NavigationItem icon="fas fa-table" itemTopic="Agile Board" />
                 <NavigationItem icon="fas fa-medal" itemTopic="Daily Goals" />
@@ -27,7 +29,12 @@ class NavigationBar extends Component {
 }
 
 NavigationBar.propTypes = {
+    isNavigationSidebarOpen: PropTypes.bool,
     logout: PropTypes.func.isRequired,
 }
 
-export default connect(null, { logout })(NavigationBar);
+const mapStateToProps = state => ({
+    isNavigationSidebarOpen: state.layout.isNavigatonSidebarOpen
+});
+
+export default connect(mapStateToProps, { logout })(NavigationBar);

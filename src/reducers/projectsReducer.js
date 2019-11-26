@@ -1,4 +1,10 @@
-import { GET_PROJECTS, PROJECTS_LOADING, DELETE_PROJECT, CREATE_PROJECT } from '../actions/types';
+import { 
+    GET_PROJECTS, 
+    PROJECTS_LOADING, 
+    DELETE_PROJECT, 
+    CREATE_PROJECT, 
+    UPDATE_PROJECT 
+} from '../actions/types';
 
 const initialState = {
     isLoading: false,
@@ -27,6 +33,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 data: state.data.filter(project => project.id !== action.payload)
+            };
+        case UPDATE_PROJECT:
+            const index = state.data.findIndex(project => project.id = action.payload.id);
+            state.data[index] = action.payload;
+            return {
+                ...state,
+                data: state.data
             };
         default:
             return state;

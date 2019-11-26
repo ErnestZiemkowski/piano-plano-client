@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import './styles.scss';
 import { daysNames, monthNames } from '../../../utils/dateTime';
-
+import { toggleNavigationSidebar } from '../../../actions/layout';
 
 class Header extends Component {
     constructor(props) {
@@ -29,7 +29,6 @@ class Header extends Component {
         clearInterval(this.timerID);
     }
     
-
     render() {
         const { userName } = this.props;
         const { date } = this.state;
@@ -38,20 +37,27 @@ class Header extends Component {
 
         return (
             <div className="header">
-                <span className="text-light">Welcome back, {userName}</span>
+                <span className="text-light">
+                    <span onClick={() => this.props.toggleNavigationSidebar()} className="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="Create new project">
+                        <i className="fas fa-bars" />
+                    </span> {' '}
+                    Welcome back, {userName}
+                </span>
                 <span className="text-light">{ time }</span>                
-                <span className="text-light">{daysNames[date.getDay()]}, {date.getDay()} {monthNames[date.getMonth()]} {date.getFullYear()}</span>
+                <span className="text-light">{daysNames[date.getDay()]}, {date.getDate()} {monthNames[date.getMonth()]} {date.getFullYear()}</span>
             </div>
         );
     }    
 }
 
 Header.propTypes = {
+    toggleNavigationBar: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired, 
+    toggleNavigationSidebar: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     userName: state.auth.user.sub
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { toggleNavigationSidebar })(Header);

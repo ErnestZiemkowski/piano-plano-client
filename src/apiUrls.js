@@ -9,6 +9,7 @@ module.exports = {
     projects: {
         getAll: backendURI + "/api/projects",
         deleteById: backendURI + "/api/projects",
-        create: backendURI + "/api/projects"
+        create: backendURI + "/api/projects",
+        update: id => (backendURI + "/api/projects/" + id), 
     }
 }
