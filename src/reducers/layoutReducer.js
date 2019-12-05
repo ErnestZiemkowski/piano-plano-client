@@ -6,7 +6,7 @@ import {
 
 const initialState = {
     projectId: -1,
-    isNavigatonSidebarOpen: false
+    isNavigatonSidebarOpen: true
 };
 
 export default (state = initialState, action) => {

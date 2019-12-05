@@ -1,0 +1,32 @@
+.agile-board-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-self: center;
+    padding: 1em;
+
+    .action-btn {
+        margin: 0 .2em;
+    }
+}
+
+.loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    padding: .5em;
+
+    .add-column {
+        margin: 1em
+    }
+    .add-column:hover {
+        cursor: pointer;
+    }
+    .create-category-input {
+        width: 8em;
+    }
+}
+
+.kanban-board-background-width {
+    min-width: 120rem;
+}

@@ -16,7 +16,7 @@ class ProjectInfo extends Component {
         this.state = {
             name: '',
             description: '',
-            startDate: '',
+            createDateTime: '',
             creatorUsername: '',
         };
     }
@@ -25,7 +25,7 @@ class ProjectInfo extends Component {
         this.setState({
             name: this.props.project.name,
             description: this.props.project.description,
-            startDate: this.props.project.startDate,
+            createDateTime: this.props.project.createDateTime,
             creatorUsername: this.props.project.creator.username,
         })            
     }
@@ -35,7 +35,7 @@ class ProjectInfo extends Component {
             this.setState({
                 name: nextProps.project.name,
                 description: nextProps.project.description,
-                startDate: nextProps.project.startDate,
+                createDateTime: nextProps.project.createDateTime,
                 creatorUsername: nextProps.project.creator.username,
             });
         }
@@ -54,8 +54,8 @@ class ProjectInfo extends Component {
     }
 
     render() {
-        const { name, description, startDate, creatorUsername } = this.state;
-        const d = new Date(Date.parse(startDate));
+        const { name, description, createDateTime, creatorUsername } = this.state;
+        const d = new Date(Date.parse(createDateTime));
 
         return (
             <div className="project-details-side-bar">

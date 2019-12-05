@@ -29,9 +29,9 @@ class ProjectWidget extends Component {
     }
 
     render() {
-        const { startDate, name, id } = this.props;
+        const { createDateTime, name, id } = this.props;
         const { isModalOpen } = this.state;
-        const d = new Date(Date.parse(startDate));
+        const d = new Date(Date.parse(createDateTime));
 
         return (
             <div className="project-wrapper">

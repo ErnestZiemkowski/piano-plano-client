@@ -14,8 +14,9 @@ import setAuthToken from './utils/setAuthToken';
 
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import Dashboard from './components/dashboardView/Dashboard';
 import PrivateRoute from './components/common/PrivateRoute';
+import Dashboard from './components/dashboardView/Dashboard';
+import AgileBoard from './components/agileBoardView/AgileBoard';
 
 
 if(localStorage.jwtToken) {
@@ -41,6 +42,7 @@ class App extends Component {
           <Route exact path="/register" component={Register} />
           <Switch>
             <PrivateRoute exact path="/" component={Dashboard} />
+            <PrivateRoute exact path="/agile-board" component={AgileBoard} />
           </Switch>
         </Router>
       </Provider>

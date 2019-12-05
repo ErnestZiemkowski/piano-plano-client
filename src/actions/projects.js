@@ -36,7 +36,7 @@ export const deleteProject = id => dispatch => {
 
     setAuthToken(localStorage.getItem("jwtToken"));
     axios
-        .delete(api.projects.deleteById + "/" + id)
+        .delete(api.projects.deleteById(id))
         .then(res => {
             dispatch({
                 type: DELETE_PROJECT,
@@ -76,7 +76,7 @@ export const updateProject = (projectData, id) => dispatch => {
 
     setAuthToken(localStorage.getItem("jwtToken"));
     axios
-        .put(api.projects.update(id), projectData)
+        .put(api.projects.updateById(id), projectData)
         .then(res => {
             dispatch({
                 type: UPDATE_PROJECT,
@@ -90,4 +90,4 @@ export const updateProject = (projectData, id) => dispatch => {
             });
         });
 
-}
+};

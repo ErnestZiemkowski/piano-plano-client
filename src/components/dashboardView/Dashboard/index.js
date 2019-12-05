@@ -63,7 +63,7 @@ class Dashboard extends Component {
                         <div className="widgets-wrapper">
                             { projects.isLoading ?
                                 <Loader type="ball-scale-multiple" className="loader-center" /> : projects.data.map(project => 
-                                    (<ProjectWidget key={project.id} id={project.id} name={project.name} startDate={project.startDate} />)
+                                    (<ProjectWidget key={project.id} id={project.id} name={project.name} createDateTime={project.createDateTime} />)
                                 )}
                         </div>
                     </div>

@@ -51,7 +51,6 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    toggleNavigationBar: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired, 
     toggleNavigationSidebar: PropTypes.func.isRequired,
 }
