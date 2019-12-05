@@ -17,7 +17,6 @@ class Login extends Component {
             password: '',
             errors: {}
         };
-
     }
 
     componentDidMount() {
@@ -101,6 +100,7 @@ class Login extends Component {
 Login.propTypes = {
     login: PropTypes.func,
     auth: PropTypes.object,
+    history: PropTypes.object.isRequired,
     errors: PropTypes.object,
 };
 
