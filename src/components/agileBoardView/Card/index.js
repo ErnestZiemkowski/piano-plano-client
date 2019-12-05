@@ -17,7 +17,7 @@ export default class Card extends Component {
                 <span className="card-title">{ title }</span>
                 <span className="card-actions"  >
                     <i className="fas fa-info-circle"/>
-                    <i className="fas fa-times" onClick={ removeCard }/>
+                    <i className="fas fa-trash" onClick={ removeCard }/>
                 </span>
             </div>
             <div className="card-content">{ description }</div>

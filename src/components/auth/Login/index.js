@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+
 
 import './styles.scss';
 
@@ -58,11 +60,11 @@ class Login extends Component {
             <div className="wrapper">
                 <div className="image-background"></div>
                 <div className="login-form">
-                    <form className="form" onSubmit={this.handleSubmit}>
+                    <Form className="form" >
                         <h1 className="form-title">Log In</h1>
-                        <div className="form-group">
-                            <label htmlFor="username">Username or Email address</label>
-                            <input 
+                        <FormGroup>
+                            <Label for="username">Username or Email address</Label>
+                            <Input
                                 id="username-or-email"
                                 name="usernameOrEmail"
                                 className="form-control"
@@ -71,10 +73,10 @@ class Login extends Component {
                                 value={usernameOrEmail} 
                                 onChange={this.handleChange}
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="password">Password</Label>
+                            <Input
                                 id="password" 
                                 name="password"
                                 className="form-control" 
@@ -83,14 +85,20 @@ class Login extends Component {
                                 value={password}
                                 onChange={this.handleChange}
                             />
-                        </div>
-                        <div className="form-group">
+                        </FormGroup>
+                        <FormGroup>
                             <Link to="/register" >
                                 <small className="">Don't have an account? Register</small>
                             </Link>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Login</button>
-                    </form>
+                        </FormGroup>
+                        <Button 
+                            type="button" 
+                            color="primary"
+                            onClick={this.handleSubmit}
+                        >
+                            Login
+                        </Button>
+                    </Form>
                 </div>
         </div>
         )
