@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
                 data: state.data.filter(project => project.id !== action.payload)
             };
         case UPDATE_PROJECT:
-            const index = state.data.findIndex(project => project.id = action.payload.id);
+            const index = state.data.findIndex(project => project.id === action.payload.id);
             state.data[index] = action.payload;
             return {
                 ...state,

@@ -42,17 +42,15 @@ class ProjectInfo extends Component {
     }
 
     handleBlur = e => {
-        const { updateProject } = this.props;
+        const { updateProject, projectId } = this.props;
         const projectData = {
             [e.target.name]: e.target.value
         };
 
-        updateProject(projectData, this.props.projectId);
+        updateProject(projectData, projectId);
     }    
 
-    handleChange = e => {
-        this.setState({ [e.target.name] : e.target.value });
-    }
+    handleChange = e => this.setState({ [e.target.name] : e.target.value });
 
     render() {
         const { name, description, createDateTime, creatorUsername } = this.state;
