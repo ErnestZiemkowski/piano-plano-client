@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { Form, FormGroup, Label, Input } from 'reactstrap'
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
-import './styles.scss';
 import { updateProject } from '../../../actions/projects';
 import { closeProjectDetailSidebar } from '../../../actions/layout';
 import { monthNames } from '../../../utils/dateTime';
+import './styles.scss';
 
 
 class ProjectInfo extends Component {
@@ -42,11 +42,12 @@ class ProjectInfo extends Component {
     }
 
     handleBlur = e => {
+        const { updateProject } = this.props;
         const projectData = {
             [e.target.name]: e.target.value
         };
 
-        this.props.updateProject(projectData, this.props.projectId);
+        updateProject(projectData, this.props.projectId);
     }    
 
     handleChange = e => {
@@ -59,9 +60,14 @@ class ProjectInfo extends Component {
 
         return (
             <div className="project-details-side-bar">
-                <button onClick={() => this.props.closeProjectDetailSidebar()} type="button" className="close" aria-label="Close">
+                <Button 
+                    className="close" 
+                    type="button" 
+                    aria-label="Close"
+                    onClick={() => this.props.closeProjectDetailSidebar()} 
+                >
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </Button>
                 <h1 className="project-details-header">Project details</h1>
                 <Form>
                     <FormGroup>

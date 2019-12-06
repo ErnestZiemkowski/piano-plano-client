@@ -14,7 +14,7 @@ import setAuthToken from './utils/setAuthToken';
 
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import PrivateRoute from './components/common/PrivateRoute';
+import PrivateRoute from './components/layout/PrivateRoute';
 import Dashboard from './components/dashboardView/Dashboard';
 import AgileBoard from './components/agileBoardView/AgileBoard';
 

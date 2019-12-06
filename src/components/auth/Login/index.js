@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 
@@ -17,25 +17,16 @@ class Login extends Component {
             password: '',
             errors: {}
         };
-
     }
 
     componentDidMount() {
-        if(this.props.auth.isAuthenticated) {
-            this.props.history.push("/");
-        }
+        if(this.props.auth.isAuthenticated) this.props.history.push("/");
     }
     
     componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/");
-        }
-    
-        if (nextProps.errors) {
-            this.setState({
-            errors: nextProps.errors
-            });
-        }
+        const { history } = this.props;
+        if (nextProps.auth.isAuthenticated) history.push("/");
+        if (nextProps.errors) this.setState({ errors: nextProps.errors });
     }    
 
     handleChange = e => {
@@ -45,19 +36,20 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
         const { usernameOrEmail, password } = this.state;
+        const { login } = this.props;
         const userData = {
             username: usernameOrEmail,
             password: password
         };
 
-        this.props.login(userData);
+        login(userData);
     };
 
     render() {
         const { usernameOrEmail, password } = this.state;
 
         return (
-            <div className="wrapper">
+            <div className="login-wrapper">
                 <div className="image-background"></div>
                 <div className="login-form">
                     <Form className="form" >
@@ -108,6 +100,7 @@ class Login extends Component {
 Login.propTypes = {
     login: PropTypes.func,
     auth: PropTypes.object,
+    history: PropTypes.object.isRequired,
     errors: PropTypes.object,
 };
 

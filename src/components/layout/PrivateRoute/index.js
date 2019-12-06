@@ -9,13 +9,9 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     <Route
         {...rest}
         render={props => {
-            if(auth.isLoading) {
-                return <Loader type="ball-scale-multiple" active />
-            } else 
-            if (auth.isAuthenticated) {
-                return <Component {...props} />;
-            } else {
-                return <Redirect to="/login" />;            }
+            if(auth.isLoading) return <Loader type="ball-scale-multiple" active />;
+            if(auth.isAuthenticated) return <Component {...props} />;
+            return <Redirect to="/login" />;
         }}
     />
 );

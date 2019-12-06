@@ -8,9 +8,9 @@ import "./styles.scss";
 import NavigationBar from "../../layout/NavigationBar";
 import Header from "../../layout/Header";
 import ProjectWidget from "../ProjectWidget";
+import CreateProjectModal from "../CreateProjectModal";
 import ProjectInfo from '../ProjectInfo';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap'
-import { getAllProjects, createProject } from "../../../actions/projects"
+import { getAllProjects } from "../../../actions/projects"
 
 
 class Dashboard extends Component {
@@ -18,8 +18,6 @@ class Dashboard extends Component {
         super(props);
         this.state = {
             isModalOpen: false,
-            name: '',
-            description: '',
         }
     }
 
@@ -35,21 +33,9 @@ class Dashboard extends Component {
         this.setState({ [e.target.name] : e.target.value });
     }
 
-    handleProjectCreation = e => {
-        e.preventDefault();
-        const { name, description } = this.state;
-        const projectData = {
-            name: name,
-            description: description
-        };
-
-        this.props.createProject(projectData);
-        this.toggleModal();
-    }
-
     render() {
         const { projects, projectIdSidebarDetails } = this.props;
-        const { name, description, isModalOpen } = this.state;
+        const { isModalOpen } = this.state;
         return (
             <div className="image-wrapper">
                 <NavigationBar />
@@ -70,49 +56,17 @@ class Dashboard extends Component {
                     </div>
                 </div>
                 { projectIdSidebarDetails === -1 ? '' : <ProjectInfo projectId={projectIdSidebarDetails} />}
-
-                <Modal 
-                    isOpen={isModalOpen}
-                    toggle={this.toggleModal}
-                    backdrop={true}
-                >
-                    <ModalHeader>Create Project</ModalHeader>
-                    <ModalBody>
-                        <Form>
-                            <FormGroup>
-                                <Label for="project-name">Name</Label>
-                                <Input 
-                                    onChange={this.handleChange}
-                                    value={name} 
-                                    type="text" 
-                                    name="name" 
-                                    id="project-name" 
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="project-description">Description</Label>
-                                <Input 
-                                    onChange={this.handleChange} 
-                                    value={description}
-                                    type="textarea" 
-                                    name="description" 
-                                    id="project-description" 
-                                />
-                            </FormGroup>
-                        </Form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="success" onClick={this.handleProjectCreation}>Create</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
-                    </ModalFooter>
-                </Modal>
+                
+                <CreateProjectModal
+                    isModalOpen={isModalOpen}
+                    toggleModal={this.toggleModal}
+                />
             </div>
         )
     }
 }
 
 Dashboard.propTypes = {
-    createProject: PropTypes.func.isRequired,
     getAllProjects: PropTypes.func.isRequired,
     projects: PropTypes.shape({
         isLoading: PropTypes.bool.isRequired,
@@ -126,4 +80,4 @@ const mapStateToProps = state => ({
     projectIdSidebarDetails: state.layout.projectId
 });
 
-export default connect(mapStateToProps, { getAllProjects, createProject })(Dashboard);
+export default connect(mapStateToProps, { getAllProjects })(Dashboard);

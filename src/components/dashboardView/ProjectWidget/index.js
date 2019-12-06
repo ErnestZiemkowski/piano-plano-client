@@ -22,14 +22,15 @@ class ProjectWidget extends Component {
     }
 
     handleDelete = e => {
+        const { deleteProject } = this.props;
         e.preventDefault();
 
-        this.props.deleteProject(this.props.id);
+        deleteProject(this.props.id);
         this.toggleModal();
     }
 
     render() {
-        const { createDateTime, name, id } = this.props;
+        const { openProjectDetailSidebarById ,createDateTime, name, id } = this.props;
         const { isModalOpen } = this.state;
         const d = new Date(Date.parse(createDateTime));
 
@@ -39,12 +40,31 @@ class ProjectWidget extends Component {
                     <div className="project-details">
                         <h2 className="project-name">{ name }</h2>
                         <div className="project-actions">
-                            <i onClick={() => this.props.openProjectDetailSidebarById(id)} className="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Show details about project"/>
-                            <i className="fas fa-arrow-circle-right" data-toggle="tooltip" data-placement="top" title="Go to project agile board"/>
-                            <i onClick={this.toggleModal} className="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Delete project"/>
+                            <i 
+                                onClick={() => openProjectDetailSidebarById(id)} 
+                                className="fas fa-info-circle" 
+                                data-toggle="tooltip" 
+                                data-placement="top" 
+                                title="Show details about project"
+                            />
+                            <i 
+                                className="fas fa-arrow-circle-right" 
+                                data-toggle="tooltip" 
+                                data-placement="top" 
+                                title="Go to project agile board"
+                            />
+                            <i
+                                onClick={this.toggleModal} 
+                                className="fas fa-trash" 
+                                data-toggle="tooltip" 
+                                data-placement="top" 
+                                title="Delete project"
+                            />
                         </div>
                     </div>
-                    <small className="project-start-date">Created at { daysNames[d.getDay()] }, { d.getDate() } { monthNames[d.getMonth()] } { d.getFullYear() }</small>
+                    <small className="project-start-date">
+                        Created at { daysNames[d.getDay()] }, { d.getDate() } { monthNames[d.getMonth()] } { d.getFullYear() 
+                    }</small>
                 </div>
                 <div className="progress">
                     <div 

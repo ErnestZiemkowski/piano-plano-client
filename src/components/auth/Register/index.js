@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import './styles.scss';
 
@@ -16,36 +17,25 @@ class Register extends Component {
             password: '',
             errors: {}
         };
-
-        // this.handleChange = this.handleChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        if(this.props.auth.isAuthenticated) {
-            this.props.history.push("/");
-        }
+        const { history } = this.props;
+        if(this.props.auth.isAuthenticated) history.push("/");
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
-        }
+        if(nextProps.errors) this.setState({ errors: nextProps.errors });
     }
-    
-    
 
-    handleChange = (e) => {
+    handleChange = e => {
         this.setState({ [e.target.name] : e.target.value });
     };
 
-    handleSubmit = (e) => {
+    handleSubmit = e => {
         e.preventDefault();
-
         const { username, email, password } = this.state;
-        const { history } = this.props;
+        const { history, register } = this.props;
 
         const newUser = {
             username: username,
@@ -53,21 +43,21 @@ class Register extends Component {
             password: password
         }
 
-        this.props.register(newUser, history);
+        register(newUser, history);
     };   
     
     render() {
         const { username, email, password } = this.state;
 
         return (
-            <div className="wrapper">
+            <div className="register-wrapper">
                 <div className="image-background"></div>
                 <div className="register-form">
-                    <form className="form" onSubmit={this.handleSubmit}>
+                    <Form className="form" >
                         <h1 className="form-title">Create account</h1>
-                        <div className="form-group">
-                            <label htmlFor="username">Username</label>
-                            <input 
+                        <FormGroup>
+                            <Label for="username">Username</Label>
+                            <Input 
                                 id="username" 
                                 name="username"
                                 type="text" 
@@ -76,10 +66,10 @@ class Register extends Component {
                                 value={username} 
                                 onChange={this.handleChange}
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="emai1">Email address</label>
-                            <input 
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="emai1">Email address</Label>
+                            <Input 
                                 id="email" 
                                 name="email"
                                 type="email" 
@@ -88,10 +78,10 @@ class Register extends Component {
                                 value={email} 
                                 onChange={this.handleChange}
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input 
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="password">Password</Label>
+                            <Input 
                                 id="password" 
                                 name="password"
                                 type="password" 
@@ -100,14 +90,20 @@ class Register extends Component {
                                 value={password} 
                                 onChange={this.handleChange}
                             />
-                        </div>
-                        <div className="form-group">
+                        </FormGroup>
+                        <FormGroup>
                             <Link to="/login" >
                                 <small className="">Already have an account? Login</small>
                             </Link>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Register</button>
-                    </form>
+                        </FormGroup>
+                        <Button 
+                            type="submit" 
+                            color="primary"
+                            onClick={this.handleSubmit}
+                        >
+                            Register
+                        </Button>
+                    </Form>
                 </div>
             </div>
         )
@@ -117,6 +113,7 @@ class Register extends Component {
 Register.propTypes = {
     register: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
 };
 
