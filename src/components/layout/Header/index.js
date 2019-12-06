@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import './styles.scss';
 import { daysNames, monthNames } from '../../../utils/dateTime';
 import { toggleNavigationSidebar } from '../../../actions/layout';
+import './styles.scss';
 
 class Header extends Component {
     constructor(props) {
@@ -16,9 +16,7 @@ class Header extends Component {
     }
 
     tick() {
-        this.setState({
-            date: new Date()
-        });
+        this.setState({ date: new Date() });
     }
 
     componentDidMount() {
@@ -38,13 +36,23 @@ class Header extends Component {
         return (
             <div className="header">
                 <span className="text-light">
-                    <span onClick={() => this.props.toggleNavigationSidebar()} className="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="Create new project">
+                    <span 
+                        onClick={() => this.props.toggleNavigationSidebar()} 
+                        className="badge badge-light" 
+                        data-toggle="tooltip" 
+                        data-placement="bottom" 
+                        title="Create new project"
+                    >
                         <i className="fas fa-bars" />
                     </span> {' '}
                     Welcome back, {userName}
                 </span>
-                <span className="text-light">{ time }</span>                
-                <span className="text-light">{daysNames[date.getDay()]}, {date.getDate()} {monthNames[date.getMonth()]} {date.getFullYear()}</span>
+                <span className="text-light">
+                    { time }
+                </span>                
+                <span className="text-light">
+                    {daysNames[date.getDay()]}, {date.getDate()} {monthNames[date.getMonth()]} {date.getFullYear()}
+                </span>
             </div>
         );
     }    
