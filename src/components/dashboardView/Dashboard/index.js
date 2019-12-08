@@ -11,6 +11,7 @@ import ProjectWidget from "../ProjectWidget";
 import CreateProjectModal from "../CreateProjectModal";
 import ProjectInfo from '../ProjectInfo';
 import { getAllProjects } from "../../../actions/projects"
+import { countProgress } from '../../../utils/project';
 
 
 class Dashboard extends Component {
@@ -36,6 +37,7 @@ class Dashboard extends Component {
     render() {
         const { projects, projectIdSidebarDetails } = this.props;
         const { isModalOpen } = this.state;
+
         return (
             <div className="image-wrapper">
                 <NavigationBar />
@@ -49,9 +51,15 @@ class Dashboard extends Component {
                         </div>
                         <div className="widgets-wrapper">
                             { projects.isLoading ?
-                                <Loader type="ball-scale-multiple" className="loader-center" /> : projects.data.map(project => 
-                                    (<ProjectWidget key={project.id} id={project.id} name={project.name} createDateTime={project.createDateTime} />)
-                                )}
+                                <Loader type="ball-scale-multiple" className="loader-center" /> : projects.data.map(project => {
+                                    return <ProjectWidget 
+                                        key={project.id} 
+                                        id={project.id} 
+                                        name={project.name} 
+                                        createDateTime={project.createDateTime}  
+                                        progress={countProgress(project)}    
+                                    />;
+                                })}
                         </div>
                     </div>
                 </div>
@@ -77,7 +85,7 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
     projects: state.projects,
-    projectIdSidebarDetails: state.layout.projectId
+    projectIdSidebarDetails: state.layout.projectId,
 });
 
 export default connect(mapStateToProps, { getAllProjects })(Dashboard);

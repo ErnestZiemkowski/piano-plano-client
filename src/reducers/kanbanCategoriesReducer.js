@@ -6,8 +6,10 @@ import {
     KANBAN_CATEGORIES_LOADING,
     REARANGE_KANBAN_BOARD,
     CREATE_CARD,
-    DELETE_CARD
+    DELETE_CARD,
+    UPDATE_CARD
 } from '../actions/types';
+import _ from 'lodash';
 
 const initialState = {
     isLoading: false,
@@ -57,6 +59,23 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 data: [...state.data]
+            };
+        case UPDATE_CARD:
+            let cardRows = _.clone(state.data.map(category => category.cards));
+            cardRows = cardRows.map(cardRow => {
+                return cardRow.map(card => {
+                    if(card.id === action.payload.id) card = action.payload
+                    return card;
+                })
+            });
+            const data = state.data.map((category, index) => {
+                category.cards = cardRows[index];
+                return category;
+            });
+
+            return {
+                ...state,
+                data: data
             };
         case REARANGE_KANBAN_BOARD:
         default:

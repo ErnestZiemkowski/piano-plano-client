@@ -1,11 +1,14 @@
 import { 
     OPEN_PROJECT_DETAIL_SIDEBAR, 
     CLOSE_PROJECT_DETAIL_SIDEBAR,
+    OPEN_ISSUE_DETAILS_MODAL,
+    CLOSE_ISSUE_DETAILS_MODAL,
     TOGGLE_NAVIGATION_SIDEBAR
 } from '../actions/types';
 
 const initialState = {
     projectId: -1,
+    issueId: -1,
     isNavigatonSidebarOpen: true
 };
 
@@ -26,6 +29,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isNavigatonSidebarOpen: !state.isNavigatonSidebarOpen
+            };
+        case OPEN_ISSUE_DETAILS_MODAL:
+            return {
+                ...state,
+                issueId: action.payload
+            };
+        case CLOSE_ISSUE_DETAILS_MODAL:
+            return {
+                ...state,
+                issueId: -1
             };
         default:
             return state;

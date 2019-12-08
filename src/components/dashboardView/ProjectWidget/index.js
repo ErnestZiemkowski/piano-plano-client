@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
-import './styles.scss';
-import { daysNames, monthNames } from '../../../utils/dateTime';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+
+import './styles.scss';
 import { deleteProject } from '../../../actions/projects';
+import { daysNames, monthNames } from '../../../utils/dateTime';
 import { openProjectDetailSidebarById } from '../../../actions/layout';
 
 
@@ -30,7 +31,7 @@ class ProjectWidget extends Component {
     }
 
     render() {
-        const { openProjectDetailSidebarById ,createDateTime, name, id } = this.props;
+        const { progress, openProjectDetailSidebarById, createDateTime, name, id } = this.props;
         const { isModalOpen } = this.state;
         const d = new Date(Date.parse(createDateTime));
 
@@ -46,12 +47,6 @@ class ProjectWidget extends Component {
                                 data-toggle="tooltip" 
                                 data-placement="top" 
                                 title="Show details about project"
-                            />
-                            <i 
-                                className="fas fa-arrow-circle-right" 
-                                data-toggle="tooltip" 
-                                data-placement="top" 
-                                title="Go to project agile board"
                             />
                             <i
                                 onClick={this.toggleModal} 
@@ -70,13 +65,15 @@ class ProjectWidget extends Component {
                     <div 
                         className="progress-bar progress-bar-striped bg-info" 
                         role="progressbar" 
-                        aria-valuenow="75" 
+                        aria-valuenow={progress} 
                         aria-valuemin="0" 
                         aria-valuemax="100"
-                        style={{ width: '75%' }}>
+                        style={{ width: `${progress}%` }}>
                     </div>
                 </div>
-                <div></div>
+                <div className="progress-value">
+                    {progress} %
+                </div>
                 <Modal 
                     isOpen={isModalOpen}
                     toggle={this.toggleModal}
@@ -103,6 +100,7 @@ ProjectWidget.propTypes = {
     name: PropTypes.string,
     deleteProject: PropTypes.func.isRequired,
     openProjectDetailSidebarById: PropTypes.func.isRequired,
+    progress: PropTypes.number.isRequired,
 };
 
 export default connect(null, { deleteProject, openProjectDetailSidebarById })(ProjectWidget);

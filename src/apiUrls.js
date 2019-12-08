@@ -24,5 +24,6 @@ module.exports = {
     cards: {
         create: backendURI + "/api/cards",
         deleteById: id => (backendURI + `/api/cards/${id}`),
+        updateById: id => (backendURI + `/api/cards/${id}`),
     }
 }

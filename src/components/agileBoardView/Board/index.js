@@ -6,6 +6,7 @@ import Loader from 'react-loaders';
 import KanbanBoard from '@lourenci/react-kanban';
 import NewCategoryInput from "../NewCategoryInput";
 import Card from "../Card";
+import IssueDetailsModal from '../IssueDetailsModal';
 import { 
     getKanbanCategoriesByProjectId, 
     createKanbanCategory, 
@@ -21,24 +22,27 @@ class Board extends Component {
     }
 
     handleRemoveCategory = (board, lane) => {
-        this.props.deleteKanbanCategory(lane.id);
+        const { deleteKanbanCategory } = this.props;
+        deleteKanbanCategory(lane.id);
     };
 
     handleRenameCategory = (board, lane) => {
+        const { updateKanbanCategory } = this.props;
         const kanbanCategoryData = {
             title: lane.title
         };
-        this.props.updateKanbanCategory(kanbanCategoryData, lane.id);
+        updateKanbanCategory(kanbanCategoryData, lane.id);
     };
 
     handleKanbanReposition = (board, source, destination) => {
+        const { rearangeKanbanBoard } = this.props;
         const kanbanCategoriesData = board
             .lanes
             .map((kanbanCategory, index) => ({
                 ...kanbanCategory,
                 position: index
             }));
-        this.props.rearangeKanbanBoard(kanbanCategoriesData);
+        rearangeKanbanBoard(kanbanCategoriesData);
     };
 
     handleCardRemove = (board, lane, card) => {
@@ -73,12 +77,13 @@ class Board extends Component {
                         onLaneRemove={(board, lane) => this.handleRemoveCategory(board, lane)}
                         onLaneRename={(board, lane) => this.handleRenameCategory(board, lane)}
                         onLaneDragEnd={(board, source, destination) => this.handleKanbanReposition(board, source, destination)}
-                        renderCard={({ id, title, description }, { removeCard, dragging }) => (
-                            <Card dragging={dragging} removeCard={removeCard} id={id} title={title} description={description} />
+                        renderCard={({ id, cardCode, title }, { removeCard, dragging }) => (
+                            <Card dragging={dragging} removeCard={removeCard} id={id} cardCode={cardCode} title={title} />
                         )}
                         initialBoard={{lanes: this.sortKanbanCategoriesByPosition(kanbanCategories.data)}}
                     />
                     <NewCategoryInput projectId={projectId} />
+                    <IssueDetailsModal/>
                 </Fragment>
         )}
         return <NewCategoryInput projectId={projectId} />

@@ -11,7 +11,8 @@ import {
     GET_ERRORS,
     REARANGE_KANBAN_BOARD,
     DELETE_CARD,
-    CREATE_CARD
+    CREATE_CARD,
+    UPDATE_CARD
 } from './types';
 
 
@@ -138,3 +139,21 @@ export const createCard = cardData => dispatch => {
             });
         });
 }
+
+export const updateCard = (cardData, id) => dispatch => {
+    setAuthToken(localStorage.getItem("jwtToken"));
+    axios
+        .put(api.cards.updateById(id), cardData)
+        .then(res => {
+            dispatch({
+                type: UPDATE_CARD,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        })
+};
