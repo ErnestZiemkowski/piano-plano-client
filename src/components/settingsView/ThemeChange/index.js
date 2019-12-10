@@ -65,7 +65,7 @@ class ThemeChange extends Component {
                         onClick={this.toggleModal}
                         className="btn btn-sm theme-change-btn"
                     >
-                        Browse
+                        <i class="fas fa-images"/> Browse
                     </Button>
                 </Form>
                 <Modal 
