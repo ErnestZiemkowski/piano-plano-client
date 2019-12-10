@@ -2,9 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { 
+    Modal, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter, 
+    FormGroup, 
+    Label,
+    Button
+} from 'reactstrap';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import { createProject } from "../../../actions/projects"
+
 import "./styles.scss";
 
 class CreateProjectModal extends Component {
@@ -27,7 +37,7 @@ class CreateProjectModal extends Component {
 
         const projectData = {
             name: name,
-            description: description
+            description: description,
         };
         
         createProject(projectData);
@@ -46,28 +56,37 @@ class CreateProjectModal extends Component {
             >
                 <ModalHeader>Create Project</ModalHeader>
                 <ModalBody>
-                    <Form>
+                    <AvForm className="create-project-modal">
                         <FormGroup>
                             <Label for="project-name">Name</Label>
-                            <Input 
+                            <AvField 
+                                id="project-name"
+                                name="project-name" 
+                                type="text"
+                                value={name}
                                 onChange={this.handleChange}
-                                value={name} 
-                                type="text" 
-                                name="name" 
-                                id="project-name" 
+                                validate={{
+                                    required: {value: true, errorMessage: 'Project name cannot be blank'},
+                                    minLength: {value: 5, errorMessage: 'Project name must be between 5 and 75 characters'},
+                                    maxLength: {value: 75}
+                                }}
                             />
                         </FormGroup>
                         <FormGroup>
                             <Label for="project-description">Description</Label>
-                            <Input 
-                                onChange={this.handleChange} 
-                                value={description}
+                            <AvField
+                                id="project-description"
                                 type="textarea" 
-                                name="description" 
-                                id="project-description" 
+                                name="project-description"
+                                className="project-description" 
+                                value={description}
+                                onChange={this.handleChange} 
+                                validate={{
+                                    maxLength: {value: 500}
+                                }}
                             />
                         </FormGroup>
-                    </Form>
+                    </AvForm>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="success" onClick={this.handleProjectCreation}>Create</Button>{' '}

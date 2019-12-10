@@ -9,11 +9,10 @@ import {
     ModalBody, 
     ModalFooter, 
     Button, 
-    Form, 
     FormGroup, 
-    Label, 
-    Input
+    Label
 } from 'reactstrap';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import { closeIssueDetailsModal } from '../../../actions/layout';
 import { monthNames } from '../../../utils/dateTime';
@@ -80,7 +79,7 @@ class IssueDetailsModal extends Component {
                 <ModalHeader>Issue Details</ModalHeader>
                 <ModalBody>
                     {!issueDetails ? <Loader type="ball-scale-multiple" /> :
-                        <Form>
+                        <AvForm className="issue-details-form">
                             <FormGroup>
                                 <Label>Creator: {issueDetails.creator.username}</Label>
                             </FormGroup>
@@ -89,27 +88,36 @@ class IssueDetailsModal extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Title</Label>
-                                <Input 
+                                <AvField 
                                     id="name" 
                                     name="title"
                                     type="text"
                                     value={title}
                                     onBlur={this.handleBlur}
-                                    onChange={this.handleChange} 
+                                    onChange={this.handleChange}
+                                    validate={{
+                                        required: {value: true, errorMessage: 'Issue title cannot be blank'},
+                                        minLength: {value: 5, errorMessage: 'Issue title must be between 5 and 75 characters'},
+                                        maxLength: {value: 75}
+                                    }}    
                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Label>Description</Label>
-                                <Input 
+                                <AvField
                                     id="description" 
                                     name="description"
                                     type="textarea"
+                                    className="issue-details"
                                     value={description}
                                     onBlur={this.handleBlur}
                                     onChange={this.handleChange} 
+                                    validate={{
+                                        maxLength: {value: 500}
+                                    }}    
                                 />
                             </FormGroup>
-                        </Form>
+                        </AvForm>
                     }
                 </ModalBody>
                 <ModalFooter>

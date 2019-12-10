@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
-import './styles.scss';
+import { Button, FormGroup, Label } from 'reactstrap';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import { register } from "../../../actions/auth";
+
+import './styles.scss';
 
 class Register extends Component {
     constructor() {
@@ -47,17 +49,17 @@ class Register extends Component {
     };   
     
     render() {
-        const { username, email, password } = this.state;
-
+        const { username, email, password, errors } = this.state;
+        console.log(this.state);
         return (
             <div className="register-wrapper">
                 <div className="image-background"></div>
                 <div className="register-form">
-                    <Form className="form" >
+                    <AvForm className="form">
                         <h1 className="form-title">Create account</h1>
                         <FormGroup>
                             <Label for="username">Username</Label>
-                            <Input 
+                            <AvField 
                                 id="username" 
                                 name="username"
                                 type="text" 
@@ -65,11 +67,16 @@ class Register extends Component {
                                 placeholder="Username"
                                 value={username} 
                                 onChange={this.handleChange}
+                                validate={{
+                                    required: {value: true, errorMessage: 'Username cannot be blank'},
+                                    minLength: {value: 3, errorMessage: 'Username must be between 5 and 75 characters'},
+                                    maxLength: {value: 50}
+                                }}
                             />
                         </FormGroup>
                         <FormGroup>
                             <Label for="emai1">Email address</Label>
-                            <Input 
+                            <AvField 
                                 id="email" 
                                 name="email"
                                 type="email" 
@@ -77,20 +84,29 @@ class Register extends Component {
                                 placeholder="Enter email" 
                                 value={email} 
                                 onChange={this.handleChange}
+                                validate={{
+                                    emai1: true
+                                }}
                             />
                         </FormGroup>
                         <FormGroup>
                             <Label for="password">Password</Label>
-                            <Input 
+                            <AvField 
                                 id="password" 
                                 name="password"
                                 type="password" 
                                 className="form-control" 
-                                placeholder="Password"
+                                placeholder="********"
                                 value={password} 
                                 onChange={this.handleChange}
+                                validate={{
+                                    required: {value: true, errorMessage: 'Password cannot be blank'},
+                                    minLength: {value: 6, errorMessage: 'Password must be between 6 and 100 characters'},
+                                    maxLength: {value: 100}
+                                }}
                             />
                         </FormGroup>
+                        { !errors.message ? '' : <p className="text-danger">Invalid Credentials</p> }
                         <FormGroup>
                             <Link to="/login" >
                                 <small className="">Already have an account? Login</small>
@@ -103,7 +119,7 @@ class Register extends Component {
                         >
                             Register
                         </Button>
-                    </Form>
+                    </AvForm>
                 </div>
             </div>
         )

@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
 
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { 
+    Modal, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter, 
+    Button, 
+    FormGroup, 
+    Label
+} from 'reactstrap';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
+
 import { createCard } from "../../../actions/kanbanCategories";
+
 import "./styles.scss";
 
 
@@ -52,28 +63,37 @@ class CreateIssueModal extends Component {
             >
                 <ModalHeader>Create Issue</ModalHeader>
                 <ModalBody>
-                    <Form>
+                    <AvForm className="create-issue-form">
                         <FormGroup>
                             <Label for="card-title">Title</Label>
-                            <Input 
-                                onChange={this.handleChange}
-                                value={title} 
-                                type="text" 
-                                name="title" 
+                            <AvField 
                                 id="card-title" 
+                                name="title" 
+                                type="text" 
+                                value={title} 
+                                onChange={this.handleChange}
+                                validate={{
+                                    required: {value: true, errorMessage: 'Issue title cannot be blank'},
+                                    minLength: {value: 5, errorMessage: 'Issue title must be between 5 and 75 characters'},
+                                    maxLength: {value: 75}
+                                }}
                             />
                         </FormGroup>
                         <FormGroup>
                             <Label for="card-description">Description</Label>
-                            <Input 
-                                onChange={this.handleChange} 
-                                value={description}
-                                type="textarea" 
-                                name="description" 
+                            <AvField 
                                 id="card-description" 
+                                name="description" 
+                                type="textarea"
+                                className="card-description"
+                                value={description}
+                                onChange={this.handleChange}
+                                validate={{
+                                    maxLength: {value: 500}
+                                }}
                             />
                         </FormGroup>
-                    </Form>
+                    </AvForm>
                 </ModalBody>
                 <ModalFooter>
                     <Button 

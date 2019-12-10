@@ -1,12 +1,16 @@
 .add-column {
-    margin: 1em
+    margin: 1em .25em 1em;
 }
 
 .add-column:hover {
     cursor: pointer;
 }
 
+.create-category-form {
+    display: flex;
+}
+
 .create-category-input {
     margin: .5em;
-    width: 8em;
-}
+    width: 10em;
+}    

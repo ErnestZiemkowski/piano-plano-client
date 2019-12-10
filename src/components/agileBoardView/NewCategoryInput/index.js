@@ -1,10 +1,13 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from "react-redux";
+import React, { Component } from 'react'
 import PropTypes from "prop-types";
-import { Input } from 'reactstrap';
+import { connect } from "react-redux";
+
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import { createKanbanCategory } from "../../../actions/kanbanCategories";
+
 import "./styles.scss";
+
 
 class NewCategoryInput extends Component {
     constructor(props) {
@@ -37,13 +40,17 @@ class NewCategoryInput extends Component {
         const { newCategoryName } = this.state;
 
         return (
-            <Fragment>
-                <Input 
+            <AvForm className="create-category-form">
+                <AvField 
                     name="newCategoryName"
                     className="create-category-input"
                     placeholder="New category"
                     value={newCategoryName}
                     onChange={this.handleChange}
+                    validate={{
+                        minLength: {value: 2, errorMessage: 'Kanban category title must be between 5 and 75 characters'},
+                        maxLength: {value: 30}
+                    }}
                 />
                 <i
                     onClick={this.handleCreateCategory} 
@@ -52,7 +59,7 @@ class NewCategoryInput extends Component {
                     data-placement="bottom" 
                     title="Add category" 
                 />
-            </Fragment>
+            </AvForm>
         )
     }
 }

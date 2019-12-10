@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
-import { updateProject } from '../../../actions/projects';
+import { FormGroup, Label, Button } from 'reactstrap'
+import { AvForm, AvField } from 'availity-reactstrap-validation';
+
 import { closeProjectDetailSidebar } from '../../../actions/layout';
+import { updateProject } from '../../../actions/projects';
 import { monthNames } from '../../../utils/dateTime';
+
 import './styles.scss';
 
 
@@ -67,7 +69,7 @@ class ProjectInfo extends Component {
                     <span aria-hidden="true">&times;</span>
                 </Button>
                 <h1 className="project-details-header">Project details</h1>
-                <Form>
+                <AvForm>
                     <FormGroup>
                         <Label>Creator: { creatorUsername }</Label>
                     </FormGroup>
@@ -76,27 +78,35 @@ class ProjectInfo extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Label>Name</Label>
-                        <Input 
+                        <AvField 
                             id="name" 
                             name="name"
                             type="text"
                             value={name}
                             onBlur={this.handleBlur}
                             onChange={this.handleChange} 
+                            validate={{
+                                required: {value: true, errorMessage: 'Project name cannot be blank'},
+                                minLength: {value: 5, errorMessage: 'Project name must be between 5 and 75 characters'},
+                                maxLength: {value: 75}
+                            }}
                         />
                     </FormGroup>
                     <FormGroup>
                         <Label>Description</Label>
-                        <Input 
+                        <AvField 
                             id="description" 
                             name="description"
                             type="textarea"
                             value={description}
                             onBlur={this.handleBlur}
                             onChange={this.handleChange} 
+                            validate={{
+                                maxLength: {value: 500}
+                            }}
                         />
                     </FormGroup>
-                </Form>
+                </AvForm>
             </div>
         )
     }

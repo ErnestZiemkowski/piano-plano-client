@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { Link } from "react-router-dom";
 
+import { Button, FormGroup, Label } from 'reactstrap'
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import './styles.scss';
 
@@ -46,38 +47,45 @@ class Login extends Component {
     };
 
     render() {
-        const { usernameOrEmail, password } = this.state;
+        const { usernameOrEmail, password, errors } = this.state;
 
         return (
             <div className="login-wrapper">
                 <div className="image-background"></div>
                 <div className="login-form">
-                    <Form className="form" >
+                    <AvForm className="form" >
                         <h1 className="form-title">Log In</h1>
                         <FormGroup>
                             <Label for="username">Username or Email address</Label>
-                            <Input
+                            <AvField
                                 id="username-or-email"
+                                type="text"
                                 name="usernameOrEmail"
                                 className="form-control"
-                                type="text"
                                 placeholder="Username or Email"
                                 value={usernameOrEmail} 
                                 onChange={this.handleChange}
+                                validate={{
+                                    required: {value: true, errorMessage: 'Username or email cannot be blank'},
+                                }}
                             />
                         </FormGroup>
                         <FormGroup>
                             <Label for="password">Password</Label>
-                            <Input
+                            <AvField
                                 id="password" 
+                                type="password" 
                                 name="password"
                                 className="form-control" 
-                                type="password" 
                                 placeholder="Password"
                                 value={password}
                                 onChange={this.handleChange}
+                                validate={{
+                                    required: {value: true, errorMessage: 'Password cannot be blank'},
+                                }}
                             />
                         </FormGroup>
+                        { !errors.message ? '' : <p className="text-danger">Invalid Credentials</p> }
                         <FormGroup>
                             <Link to="/register" >
                                 <small className="">Don't have an account? Register</small>
@@ -90,7 +98,7 @@ class Login extends Component {
                         >
                             Login
                         </Button>
-                    </Form>
+                    </AvForm>
                 </div>
         </div>
         )

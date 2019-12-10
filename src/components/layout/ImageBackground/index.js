@@ -4,11 +4,18 @@ import PropTypes from "prop-types";
 
 import "./styles.scss";
 
+import { getSettings } from '../../../actions/settings'
+
 
 class ImageBackground extends Component {
     constructor(props) {
         super(props);
     }
+
+    componentDidMount() {
+        this.props.getSettings();
+    }
+    
 
     render() {
         const { className, backgroundImage } = this.props;
@@ -30,4 +37,4 @@ const mapStateToProps = state => ({
     backgroundImage: state.settings.backgroundImage
 });
 
-export default connect(mapStateToProps, null)(ImageBackground);
+export default connect(mapStateToProps, { getSettings })(ImageBackground);

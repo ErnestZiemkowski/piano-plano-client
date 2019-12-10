@@ -13,7 +13,6 @@ import store from './store';
 import setAuthToken from './utils/setAuthToken';
 
 import { setCurrentUser, logout } from './actions/auth';
-import { getSettings } from './actions/settings'
 
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
@@ -37,11 +36,7 @@ if(localStorage.jwtToken) {
 
 }
 
-class App extends Component {
-  componentDidMount() {
-    store.dispatch(getSettings());
-  }
-  
+class App extends Component {  
   render() {
     return (
       <Provider store={store}>

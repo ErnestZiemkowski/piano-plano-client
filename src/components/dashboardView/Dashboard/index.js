@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import Loader from 'react-loaders';
 
-import "./styles.scss";
 import Header from "../../layout/Header";
 import ProjectInfo from '../ProjectInfo';
 import NavigationBar from "../../layout/NavigationBar";
@@ -17,6 +16,8 @@ import CreateProjectModal from "../CreateProjectModal";
 import { getAllProjects } from "../../../actions/projects"
 import { countProgress } from '../../../utils/project';
 
+import "./styles.scss";
+
 
 class Dashboard extends Component {
     constructor(props) {
@@ -27,7 +28,8 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.getAllProjects();
+        const { getAllProjects } = this.props;
+        getAllProjects();
     }
 
     toggleModal = () => {

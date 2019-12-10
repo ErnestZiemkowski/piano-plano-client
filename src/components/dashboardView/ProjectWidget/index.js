@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 
-import './styles.scss';
-import { deleteProject } from '../../../actions/projects';
-import { daysNames, monthNames } from '../../../utils/dateTime';
 import { openProjectDetailSidebarById } from '../../../actions/layout';
+import { daysNames, monthNames } from '../../../utils/dateTime';
+import { deleteProject } from '../../../actions/projects';
+
+import './styles.scss';
 
 
 class ProjectWidget extends Component {
