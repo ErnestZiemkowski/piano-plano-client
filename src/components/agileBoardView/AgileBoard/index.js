@@ -4,14 +4,18 @@ import PropTypes from "prop-types";
 
 import Loader from 'react-loaders';
 
+import "./styles.scss";
 import Board from '../Board';
 import Header from "../../layout/Header";
-import NavigationBar from "../../layout/NavigationBar";
-import CreateIssueModal from '../CreateIssueModal';
 import ActionButtons from '../ActionButtons';
+import NavigationBar from "../../layout/NavigationBar";
+import ContentWrapper from "../../layout/ContentWrapper";
+import ImageBackground from "../../layout/ImageBackground";
+import CreateIssueModal from '../CreateIssueModal';
+import BackgroundBoard from "../../layout/BackgroundBoard";
+
 import { getAllProjects } from '../../../actions/projects';
 import { getKanbanCategoriesByProjectId } from "../../../actions/kanbanCategories";
-import "./styles.scss";
 
 
 class AgileBoard extends Component {
@@ -48,11 +52,11 @@ class AgileBoard extends Component {
         
         return (
             projectsNames.isLoading ? <Loader type="ball-scale-multiple" className="loader-center" /> : (
-                <div className="image-wrapper kanban-board-background-width">
+                <ImageBackground className="kanban-board-background-width">
                     <NavigationBar />
-                    <div className="content-wrapper">
+                    <ContentWrapper>
                         <Header/>
-                        <div className="background-board">
+                        <BackgroundBoard>
                             <ActionButtons 
                                 handleProjectChange={this.handleProjectChange}
                                 projectsNames={projectsNames}
@@ -66,14 +70,14 @@ class AgileBoard extends Component {
                                     kanbanCategories={kanbanCategories} 
                                 />
                             </div>
-                        </div>
-                    </div>
+                        </BackgroundBoard>
+                    </ContentWrapper>
                     <CreateIssueModal 
                         projectId={projectId} 
                         isModalOpen={isModalOpen} 
                         toggleModal={this.toggleModal} 
                     />
-                </div>
+                </ImageBackground>
             )
         )
     }

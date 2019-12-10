@@ -5,11 +5,15 @@ import PropTypes from "prop-types";
 import Loader from 'react-loaders';
 
 import "./styles.scss";
-import NavigationBar from "../../layout/NavigationBar";
 import Header from "../../layout/Header";
-import ProjectWidget from "../ProjectWidget";
-import CreateProjectModal from "../CreateProjectModal";
 import ProjectInfo from '../ProjectInfo';
+import NavigationBar from "../../layout/NavigationBar";
+import ProjectWidget from "../ProjectWidget";
+import ContentWrapper from "../../layout/ContentWrapper";
+import ImageBackground from "../../layout/ImageBackground";
+import BackgroundBoard from "../../layout/BackgroundBoard";
+import CreateProjectModal from "../CreateProjectModal";
+
 import { getAllProjects } from "../../../actions/projects"
 import { countProgress } from '../../../utils/project';
 
@@ -39,11 +43,11 @@ class Dashboard extends Component {
         const { isModalOpen } = this.state;
 
         return (
-            <div className="image-wrapper">
+            <ImageBackground>
                 <NavigationBar />
-                <div className="content-wrapper">
+                <ContentWrapper>
                     <Header />
-                    <div className="background-board">
+                    <BackgroundBoard>
                         <div className="projects-board-actions">
                             <span onClick={this.toggleModal} className="badge badge-dark" data-toggle="tooltip" data-placement="bottom" title="Create new project">
                                 <i className="fas fa-plus" />
@@ -61,15 +65,15 @@ class Dashboard extends Component {
                                     />;
                                 })}
                         </div>
-                    </div>
-                </div>
+                    </BackgroundBoard>
+                </ContentWrapper>
                 { projectIdSidebarDetails === -1 ? '' : <ProjectInfo projectId={projectIdSidebarDetails} />}
                 
                 <CreateProjectModal
                     isModalOpen={isModalOpen}
                     toggleModal={this.toggleModal}
                 />
-            </div>
+            </ImageBackground>
         )
     }
 }

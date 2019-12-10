@@ -1,51 +1,32 @@
 $primary-color: #1A94C2;
 @import 'loaders.css/src/animations/ball-scale-multiple.scss';
 
-.image-wrapper {
-    background-size: cover;
-    background-image: url("../../../images/background.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: 100vh;
+.widgets-wrapper {
     display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
 
-    .content-wrapper {
-        flex-grow: 2;
-        width: 100%;
-        .background-board {
-            margin: 2em;
-            background-color: rgba(245, 245, 245, .8);
-            min-height: 80vh;
+.projects-board-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-self: center;
+    padding: 1em;
+}
 
-            .widgets-wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                flex-wrap: wrap;
-            }
+.loader-hidden {
+    display: none;
+}
 
-            .projects-board-actions {
-                display: flex;
-                justify-content: flex-end;
-                align-self: center;
-                padding: 1em;
-            }
+.loader-active {
+    display: block;
+}
 
-            .loader-hidden {
-                display: none;
-            }
+.loader-center {
+    margin-top: 20em;
+}
 
-            .loader-active {
-                display: block;
-            }
-
-            .loader-center {
-                margin-top: 20em;
-            }
-
-            .add-project-icon {
-                margin: 1em;
-            }
-        }
-    }
+.add-project-icon {
+    margin: 1em;
 }

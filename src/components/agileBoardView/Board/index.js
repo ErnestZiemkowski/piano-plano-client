@@ -15,6 +15,7 @@ import {
     rearangeKanbanBoard,
     deleteCard
 } from "../../../actions/kanbanCategories";
+import { sortKanbanCategoriesByPosition } from '../../../utils/kanbanBoard';
 
 class Board extends Component {
     constructor(props) {
@@ -50,18 +51,6 @@ class Board extends Component {
         deleteCard(card.id);
     }
 
-    sortKanbanCategoriesByPosition = kanbanCategories => {
-        const sortedKanbanCategories = kanbanCategories.sort((a, b) => { return a.position - b.position });
-        const sortedCards = sortedKanbanCategories.map(kanbanCategory => ({
-            id: kanbanCategory.id,
-            title: kanbanCategory.title,
-            position: kanbanCategory.position,
-            cards: kanbanCategory.cards.sort((a, b) => { return a.position - b.position })
-        }));
-
-        return sortedCards;
-    };
-
     render() {
         const { projectId, kanbanCategories } = this.props;
         if(kanbanCategories.isLoading) return <Loader type="ball-scale-multiple" className="loader-center" />;
@@ -80,7 +69,7 @@ class Board extends Component {
                         renderCard={({ id, cardCode, title }, { removeCard, dragging }) => (
                             <Card dragging={dragging} removeCard={removeCard} id={id} cardCode={cardCode} title={title} />
                         )}
-                        initialBoard={{lanes: this.sortKanbanCategoriesByPosition(kanbanCategories.data)}}
+                        initialBoard={{lanes: sortKanbanCategoriesByPosition(kanbanCategories.data)}}
                     />
                     <NewCategoryInput projectId={projectId} />
                     <IssueDetailsModal/>

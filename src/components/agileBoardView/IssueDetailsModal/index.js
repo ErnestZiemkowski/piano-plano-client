@@ -3,11 +3,22 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Loader from 'react-loaders';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { 
+    Modal, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter, 
+    Button, 
+    Form, 
+    FormGroup, 
+    Label, 
+    Input
+} from 'reactstrap';
 
 import { closeIssueDetailsModal } from '../../../actions/layout';
 import { monthNames } from '../../../utils/dateTime';
 import { updateCard } from '../../../actions/kanbanCategories';
+
 import "./styles.scss";
 
 

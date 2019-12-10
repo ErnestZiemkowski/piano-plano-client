@@ -12,10 +12,8 @@ import {
 } from './types';
 
 export const getAllProjects = () => dispatch => {
-
     setAuthToken(localStorage.getItem("jwtToken"));
     dispatch({ type: PROJECTS_LOADING });
-
     axios
         .get(api.projects.getAll)
         .then(res => {
@@ -33,7 +31,6 @@ export const getAllProjects = () => dispatch => {
 };
 
 export const deleteProject = id => dispatch => {
-
     setAuthToken(localStorage.getItem("jwtToken"));
     axios
         .delete(api.projects.deleteById(id))
@@ -49,11 +46,9 @@ export const deleteProject = id => dispatch => {
                 payload: err.response.data
             });
         });
-
 };
 
 export const createProject = projectData => dispatch => {
-
     setAuthToken(localStorage.getItem("jwtToken"));
     axios
         .post(api.projects.create, projectData)
@@ -69,11 +64,9 @@ export const createProject = projectData => dispatch => {
                 payload: err.response.data
             });
         });
-        
 };
 
 export const updateProject = (projectData, id) => dispatch => {
-
     setAuthToken(localStorage.getItem("jwtToken"));
     axios
         .put(api.projects.updateById(id), projectData)
@@ -89,5 +82,4 @@ export const updateProject = (projectData, id) => dispatch => {
                 payload: err.response.data
             });
         });
-
 };

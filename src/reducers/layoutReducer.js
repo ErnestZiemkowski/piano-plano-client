@@ -13,7 +13,6 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-
     switch(action.type) {
         case OPEN_PROJECT_DETAIL_SIDEBAR:
             return {

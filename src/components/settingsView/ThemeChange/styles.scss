@@ -1,0 +1,25 @@
+.theme-change-wrapper {
+    padding: 2em;
+
+    .theme-change-btn {
+        margin: 1em;
+    }
+}
+
+.modal-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+
+    .theme {
+        max-width: 26em;
+        height: 16em;
+        margin: 1em;
+    }
+
+    .theme-active {
+        border: .15em solid dodgerblue;
+    }
+}

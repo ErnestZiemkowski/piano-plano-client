@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {
   HashRouter as Router,
@@ -8,14 +8,18 @@ import {
 import { Provider } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
+import './mainStyles.scss';
 import store from './store';
-import { setCurrentUser, logout } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
-import Register from './components/auth/Register';
+import { setCurrentUser, logout } from './actions/auth';
+import { getSettings } from './actions/settings'
+
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import PrivateRoute from './components/layout/PrivateRoute';
 import Dashboard from './components/dashboardView/Dashboard';
+import Settings from './components/settingsView/Settings';
 import AgileBoard from './components/agileBoardView/AgileBoard';
 
 
@@ -34,6 +38,10 @@ if(localStorage.jwtToken) {
 }
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(getSettings());
+  }
+  
   render() {
     return (
       <Provider store={store}>
@@ -43,6 +51,7 @@ class App extends Component {
           <Switch>
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute exact path="/agile-board" component={AgileBoard} />
+            <PrivateRoute exact path="/settings" component={Settings} />
           </Switch>
         </Router>
       </Provider>

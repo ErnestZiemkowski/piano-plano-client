@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
-import projectsReducer from './projectsReducer';
 import layoutReducer from './layoutReducer';
+import projectsReducer from './projectsReducer';
 import kanbanCategoriesReducer from './kanbanCategoriesReducer';
+import settingsReducer from './settingsReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     projects: projectsReducer,
     layout: layoutReducer,
     kanbanCategories: kanbanCategoriesReducer,
+    settings: settingsReducer,
 });

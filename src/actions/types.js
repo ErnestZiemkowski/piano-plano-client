@@ -31,3 +31,8 @@ export const REARANGE_KANBAN_BOARD = "REARANGE_KANBAN_BOARD";
 export const DELETE_CARD = "DELETE_CARD";
 export const CREATE_CARD = "CREATE_CARD";
 export const UPDATE_CARD = "UPDATE_CARD";
+
+//Settings
+export const SETTINGS_LOADING = "SETTINGS_LOADING";
+export const GET_SETTINGS = "GET_SETTINGS";
+export const UPDATE_SETTINGS = "UPDATE_SETTINGS";
