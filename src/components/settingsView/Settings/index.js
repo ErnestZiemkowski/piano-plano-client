@@ -7,8 +7,6 @@ import ContentWrapper from "../../layout/ContentWrapper";
 import BackgroundBoard from "../../layout/BackgroundBoard";
 import ImageBackground from "../../layout/ImageBackground";
 
-import './styles.scss';
-
 
 export default class Settings extends Component {
     render() {
