@@ -5,6 +5,7 @@ import layoutReducer from './layoutReducer';
 import projectsReducer from './projectsReducer';
 import kanbanCategoriesReducer from './kanbanCategoriesReducer';
 import settingsReducer from './settingsReducer';
+import dailyGoalsReducer from './dailyGoalsReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     layout: layoutReducer,
     kanbanCategories: kanbanCategoriesReducer,
     settings: settingsReducer,
+    dailyGoals: dailyGoalsReducer,
 });

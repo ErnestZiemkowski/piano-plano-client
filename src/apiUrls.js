@@ -29,5 +29,9 @@ module.exports = {
     settings: {
         get: backendURI + "/api/settings",
         update: backendURI + "/api/settings",
+    },
+    dailyGoals: {
+        toggle: backendURI + "/api/daily-goals",
+        getAll: backendURI + "/api/daily-goals",
     }
 }

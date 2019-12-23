@@ -1,0 +1,21 @@
+.daily-goals-header {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+}
+.daily-goals-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 30%;
+
+    .daily-goal {
+        margin: .75em 0;
+    }
+
+    .line-through {
+        text-decoration: line-through;
+    }
+}

@@ -66,8 +66,15 @@ class Board extends Component {
                         onLaneRemove={(board, lane) => this.handleRemoveCategory(board, lane)}
                         onLaneRename={(board, lane) => this.handleRenameCategory(board, lane)}
                         onLaneDragEnd={(board, source, destination) => this.handleKanbanReposition(board, source, destination)}
-                        renderCard={({ id, cardCode, title }, { removeCard, dragging }) => (
-                            <Card dragging={dragging} removeCard={removeCard} id={id} cardCode={cardCode} title={title} />
+                        renderCard={({ id, cardCode, title, done }, { removeCard, dragging }) => (
+                            <Card 
+                                id={id} 
+                                dragging={dragging} 
+                                removeCard={removeCard} 
+                                cardCode={cardCode} 
+                                title={title}
+                                done={done} 
+                            />
                         )}
                         initialBoard={{lanes: sortKanbanCategoriesByPosition(kanbanCategories.data)}}
                     />

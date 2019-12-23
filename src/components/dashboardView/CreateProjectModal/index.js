@@ -61,7 +61,7 @@ class CreateProjectModal extends Component {
                             <Label for="project-name">Name</Label>
                             <AvField 
                                 id="project-name"
-                                name="project-name" 
+                                name="name" 
                                 type="text"
                                 value={name}
                                 onChange={this.handleChange}
@@ -77,7 +77,7 @@ class CreateProjectModal extends Component {
                             <AvField
                                 id="project-description"
                                 type="textarea" 
-                                name="project-description"
+                                name="description"
                                 className="project-description" 
                                 value={description}
                                 onChange={this.handleChange} 
