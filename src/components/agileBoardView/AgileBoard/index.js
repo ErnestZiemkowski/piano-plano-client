@@ -61,7 +61,7 @@ class AgileBoard extends Component {
                                 handleProjectChange={this.handleProjectChange}
                                 projectsNames={projectsNames}
                                 currentProject={currentProject}
-                                kanbanCategoriesLength={kanbanCategories.data.lenght}
+                                kanbanCategoriesLength={kanbanCategories.data.length}
                                 toggleModal={this.toggleModal}
                             />
                             <div className={`board-wrapper ${kanbanCategories.isLoading ? 'position-center': 'position-left'}`}>

@@ -1,15 +1,14 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
 import Loader from 'react-loaders';
-import KanbanBoard from '@lourenci/react-kanban';
+import KanbanBoard, { moveLane, moveCard } from '@lourenci/react-kanban';
 import NewCategoryInput from "../NewCategoryInput";
 import Card from "../Card";
 import IssueDetailsModal from '../IssueDetailsModal';
 import { 
     getKanbanCategoriesByProjectId, 
-    createKanbanCategory, 
     deleteKanbanCategory, 
     updateKanbanCategory,
     rearangeKanbanBoard,
@@ -17,80 +16,92 @@ import {
 } from "../../../actions/kanbanCategories";
 import { sortKanbanCategoriesByPosition } from '../../../utils/kanbanBoard';
 
-class Board extends Component {
-    constructor(props) {
-        super(props);
-    }
+const Board = props => {
 
-    handleRemoveCategory = (board, lane) => {
-        const { deleteKanbanCategory } = this.props;
+    const [board, setBoard] = useState({lanes: sortKanbanCategoriesByPosition(props.kanbanCategories.data)});
+
+    useEffect(() => {
+        setBoard({lanes: sortKanbanCategoriesByPosition(props.kanbanCategories.data)});
+    }, [props.kanbanCategories.data]);
+
+    const handleRemoveCategory = lane => {
+        const { deleteKanbanCategory } = props;
         deleteKanbanCategory(lane.id);
     };
 
-    handleRenameCategory = (board, lane) => {
-        const { updateKanbanCategory } = this.props;
+    const handleRenameCategory = (lane, laneTitle) => {
+        const { updateKanbanCategory } = props;
         const kanbanCategoryData = {
-            title: lane.title
+            title: laneTitle
         };
         updateKanbanCategory(kanbanCategoryData, lane.id);
     };
 
-    handleKanbanReposition = (board, source, destination) => {
-        const { rearangeKanbanBoard } = this.props;
-        const kanbanCategoriesData = board
+    const handleKanbanReposition = (source, destination, removedItemType) => {
+        const { rearangeKanbanBoard } = props;
+        let newBoard;
+        if(removedItemType === 'lane') newBoard = moveLane(board, source, destination); 
+        if(removedItemType === 'card') newBoard = moveCard(board, source, destination); 
+
+        const kanbanCategoriesData = newBoard
             .lanes
             .map((kanbanCategory, index) => ({
                 ...kanbanCategory,
                 position: index
             }));
         rearangeKanbanBoard(kanbanCategoriesData);
+        setBoard({lanes: kanbanCategoriesData});
     };
 
-    handleCardRemove = (board, lane, card) => {
-        const { deleteCard } = this.props;
-        deleteCard(card.id);
+    const handleCardRemove = (id) => {
+        const { deleteCard } = props;
+        const newBoard = board.lanes.map(lane => {
+            const cards = lane.cards.filter(card => card.id !== id)
+            return {
+                ...lane,
+                cards    
+            };
+        });
+        setBoard({lanes: newBoard});
+        deleteCard(id);
     }
 
-    render() {
-        const { projectId, kanbanCategories } = this.props;
-        if(kanbanCategories.isLoading) return <Loader type="ball-scale-multiple" className="loader-center" />;
-        if(kanbanCategories.data.length > 0) {
-            return (
-                <Fragment>
-                    <KanbanBoard
-                        allowRemoveLane
-                        allowRenameLane
-                        allowRemoveCard
-                        onCardRemove={(board, source, destination) => this.handleCardRemove(board, source, destination)}
-                        onCardDragEnd={(board, source, destination) => this.handleKanbanReposition(board, source, destination)}
-                        onLaneRemove={(board, lane) => this.handleRemoveCategory(board, lane)}
-                        onLaneRename={(board, lane) => this.handleRenameCategory(board, lane)}
-                        onLaneDragEnd={(board, source, destination) => this.handleKanbanReposition(board, source, destination)}
-                        renderCard={({ id, cardCode, title, done }, { removeCard, dragging }) => (
-                            <Card 
-                                id={id} 
-                                dragging={dragging} 
-                                removeCard={removeCard} 
-                                cardCode={cardCode} 
-                                title={title}
-                                done={done} 
-                            />
-                        )}
-                        initialBoard={{lanes: sortKanbanCategoriesByPosition(kanbanCategories.data)}}
-                    />
-                    <NewCategoryInput projectId={projectId} />
-                    <IssueDetailsModal/>
-                </Fragment>
-        )}
-        return <NewCategoryInput projectId={projectId} />
-    }
+    const { projectId, kanbanCategories } = props;
+    if(kanbanCategories.isLoading) return <Loader type="ball-scale-multiple" className="loader-center" />;
+    if(board) {
+        return (
+            <Fragment>
+                <KanbanBoard
+                    allowRemoveLane
+                    allowRenameLane
+                    allowAddLane
+                    allowRemoveCard
+                    onLaneRemove={lane => handleRemoveCategory(lane)}
+                    onLaneRename={(lane, laneTitle) => handleRenameCategory(lane, laneTitle)}
+                    onLaneDragEnd={(source, destination) => handleKanbanReposition(source, destination, 'lane')}
+                    onCardDragEnd={(source, destination) => handleKanbanReposition(source, destination, 'card')}
+                    renderLaneAdder={() => <NewCategoryInput projectId={projectId} kanbanCategoriesCount={0} />}
+                    renderCard={({ id, cardCode, title, done }) => (
+                        <Card 
+                            id={id}
+                            handleCardRemove={handleCardRemove}
+                            cardCode={cardCode}
+                            title={title}
+                            done={done}
+                        />
+                    )}
+                >
+                    {board}
+                </KanbanBoard>
+                <IssueDetailsModal/>
+            </Fragment>
+    )}
 }
 
 Board.propTypes = {
     getKanbanCategoriesByProjectId: PropTypes.func.isRequired,
     deleteKanbanCategory: PropTypes.func.isRequired,
     updateKanbanCategory: PropTypes.func.isRequired,
-    createKanbanCategory: PropTypes.func.isRequired,
     rearangeKanbanBoard: PropTypes.func.isRequired,
     deleteCard: PropTypes.func.isRequired,
     projectsNames: PropTypes.arrayOf(PropTypes.shape({
@@ -131,7 +142,6 @@ export default connect(null, {
     getKanbanCategoriesByProjectId, 
     deleteKanbanCategory, 
     updateKanbanCategory,
-    createKanbanCategory,
     rearangeKanbanBoard,
     deleteCard,
 })(Board);

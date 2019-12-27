@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
                 data: state.data.filter(kanbanCategory => kanbanCategory.id !== action.payload)
             };
         case UPDATE_KANBAN_CATEGORY:
-            const index = state.data.findIndex(project => project.id !== action.payload);
+            const index = state.data.findIndex(project => project.id === action.payload.id);
             state.data[index] = action.payload;
             return {
                 ...state,

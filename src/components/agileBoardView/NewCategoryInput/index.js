@@ -13,7 +13,7 @@ class NewCategoryInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            newCategoryName: '',
+            newCategoryName: ''
         };
     }
 
@@ -23,12 +23,13 @@ class NewCategoryInput extends Component {
 
     handleCreateCategory = e => {
         e.preventDefault();
-        const { projectId, createKanbanCategory } = this.props;
+        const { projectId, createKanbanCategory, kanbanCategoriesCount, handleUpdate } = this.props;
         const { newCategoryName } = this.state;
  
         const kanbanCategoryData = {
             title: newCategoryName,
-            projectId: projectId
+            projectId: projectId,
+            position: kanbanCategoriesCount + 1
         };
 
         createKanbanCategory(kanbanCategoryData);
@@ -67,6 +68,7 @@ class NewCategoryInput extends Component {
 NewCategoryInput.propTypes = {
     projectId: PropTypes.number.isRequired,
     createKanbanCategory: PropTypes.func.isRequired,
+    kanbanCategoriesCount: PropTypes.number.isRequired,
 }
 
 export default connect(null, { createKanbanCategory })(NewCategoryInput)

@@ -13,7 +13,7 @@ class ActionButtons extends Component {
 
     render() {
         const { projectsNames, currentProject, kanbanCategoriesLength } = this.props;
-
+        console.log(kanbanCategoriesLength);
         return (
             <div className="agile-board-actions">
                 <Button 
