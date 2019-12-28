@@ -48,7 +48,8 @@
     "redux-thunk": "^2.3.0",
     "sass-loader": "^8.0.0",
     "styled-components": "^4.4.1",
-    "url-loader": "^2.2.0"
+    "url-loader": "^2.2.0",
+    "uuid": "^3.3.3"
   },
   "proxy": "http://127.0.0.1:5000"
 }

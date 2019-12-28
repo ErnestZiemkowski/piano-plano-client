@@ -88,8 +88,7 @@ const Board = props => {
                             cardCode={cardCode}
                             title={title}
                             done={done}
-                        />
-                    )}
+                        />)}
                 >
                     {board}
                 </KanbanBoard>

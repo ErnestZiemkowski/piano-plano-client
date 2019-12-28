@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from "prop-types";
+
+import ToastsWrapper from '../ToastsWrapper';
 
 import "./styles.scss";
 
-
 export default class ContentWrapper extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const { className } = this.props;
+        const { children, className } = this.props;
 
         return (
             <div className={`content-wrapper ${className}`}>
-                {this.props.children}
+                {children}
+                <ToastsWrapper />
             </div>
         );
     }

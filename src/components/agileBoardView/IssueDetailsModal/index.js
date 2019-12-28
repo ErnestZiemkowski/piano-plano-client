@@ -17,7 +17,8 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { toggleDailyGoal } from '../../../actions/dailyGoals';
 import { closeIssueDetailsModal } from '../../../actions/layout';
 import { monthNames } from '../../../utils/dateTime';
-import { updateCard } from '../../../actions/kanbanCategories';
+import { updateCard, getKanbanCategoriesByProjectId } from '../../../actions/kanbanCategories';
+import { createToast } from '../../../actions/toasts';
 
 import "./styles.scss";
 
@@ -78,6 +79,22 @@ class IssueDetailsModal extends Component {
         updateCard(issueData, issueDetailsId);
     }
 
+    handleStatusChange = e => {
+        e.preventDefault();
+        const { issueDetailsId, updateCard, createToast } = this.props;
+        const issueData = {
+            kanbanCategoryId: e.target.value
+        };
+        const toast = {
+            header: 'Notification',
+            body: 'Board has been updated. Please reload the page.',
+            type: 'info'
+        };
+
+        updateCard(issueData, issueDetailsId);
+        createToast(toast);
+    }
+
     toggleDailyGoal = () => {
         const { issueDetailsId, toggleDailyGoal } = this.props;
         const dailyGoal = {
@@ -95,7 +112,7 @@ class IssueDetailsModal extends Component {
         const { issueDetailsId, issueDetails, kanbanCategories } = this.props;
         const { title, description, isDailyGoal } = this.state;
         const d = new Date(Date.parse(issueDetails ? issueDetails.createdAt : null));
-
+ 
         return (
             <Modal
                 isOpen={issueDetailsId !== -1}
@@ -122,15 +139,15 @@ class IssueDetailsModal extends Component {
                                     aria-haspopup="true" 
                                     aria-expanded="false"
                                 >
-                                    huj
+                                    { issueDetails.kanbanCategoryTitle }
                                 </Button>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
                                     {kanbanCategories.map((category, index) => 
                                         (<Button 
                                             key={index} 
                                             id={category.id}
-                                            // name={category.title} 
-                                            // onClick={this.handleProjectChange} 
+                                            value={category.id} 
+                                            onClick={this.handleStatusChange} 
                                             className="dropdown-item" 
                                             type="button"
                                         >
@@ -140,14 +157,6 @@ class IssueDetailsModal extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Daily Goal: <input type="checkbox" onClick={this.toggleDailyGoal} checked={isDailyGoal}/></Label>
-                                {/* <ButtonGroup>
-                                    <Button 
-                                        color="primary" 
-                                        onClick={this.toggleDailyGoal} 
-                                        active={isDailyGoal}>
-                                            <i className="fas fa-star"/>
-                                    </Button>
-                                </ButtonGroup> */}                                
                             </FormGroup>
                             <FormGroup>
                                 <Label>Title</Label>
@@ -221,4 +230,10 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { closeIssueDetailsModal, updateCard, toggleDailyGoal })(IssueDetailsModal)
+export default connect(mapStateToProps, {
+    updateCard,
+    createToast,
+    toggleDailyGoal, 
+    closeIssueDetailsModal, 
+    getKanbanCategoriesByProjectId 
+})(IssueDetailsModal);

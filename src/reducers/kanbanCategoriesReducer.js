@@ -61,9 +61,9 @@ export default (state = initialState, action) => {
                 data: [...state.data]
             };
         case UPDATE_CARD:
-            let cardRows = _.clone(state.data.map(category => category.cards));
+            let cardRows = _.clone(state.data.map(category => ({ cards: category.cards, categoryTitle: category.title })));
             cardRows = cardRows.map(cardRow => {
-                return cardRow.map(card => {
+                return cardRow.cards.map(card => {
                     if(card.id === action.payload.id) card = action.payload
                     return card;
                 })
@@ -72,7 +72,6 @@ export default (state = initialState, action) => {
                 category.cards = cardRows[index];
                 return category;
             });
-
             return {
                 ...state,
                 data: data

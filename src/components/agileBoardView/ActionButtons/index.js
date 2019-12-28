@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { Button } from 'reactstrap';
+
 import './styles.scss';
 
 class ActionButtons extends Component {
@@ -13,7 +15,7 @@ class ActionButtons extends Component {
 
     render() {
         const { projectsNames, currentProject, kanbanCategoriesLength } = this.props;
-        console.log(kanbanCategoriesLength);
+
         return (
             <div className="agile-board-actions">
                 <Button 

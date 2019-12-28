@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
 import "./styles.scss";
 
 import { getSettings } from '../../../actions/settings'
-
 
 class ImageBackground extends Component {
     constructor(props) {
@@ -16,7 +15,6 @@ class ImageBackground extends Component {
         this.props.getSettings();
     }
     
-
     render() {
         const { className, backgroundImage } = this.props;
 

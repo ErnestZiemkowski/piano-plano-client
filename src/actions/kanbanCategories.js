@@ -155,5 +155,5 @@ export const updateCard = (cardData, id) => dispatch => {
                 type: GET_ERRORS,
                 payload: err.response.data
             });
-        })
+        });
 };

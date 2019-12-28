@@ -41,3 +41,8 @@ export const GET_DAILY_GOALS = "GET_DAILY_GOALS";
 export const SETTINGS_LOADING = "SETTINGS_LOADING";
 export const GET_SETTINGS = "GET_SETTINGS";
 export const UPDATE_SETTINGS = "UPDATE_SETTINGS";
+
+// Toasts
+export const CREATE_TOAST = "CREATE_TOAST";
+export const GET_TOASTS = "GET_TOASTS";
+export const DELETE_TOAST = "DELETE_TOAST";
