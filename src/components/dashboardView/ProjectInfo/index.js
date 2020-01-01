@@ -5,6 +5,11 @@ import { connect } from 'react-redux';
 import { FormGroup, Label, Button } from 'reactstrap'
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
+import CreateComment from '../../layout/CreateComment';
+import Comment from '../../layout/Comment';
+
+import { COMMENT_PROJECT } from '../../../actions/types';
+import { getCommentsByProjectId } from '../../../actions/comments';
 import { closeProjectDetailSidebar } from '../../../actions/layout';
 import { updateProject } from '../../../actions/projects';
 import { monthNames } from '../../../utils/dateTime';
@@ -21,6 +26,18 @@ class ProjectInfo extends Component {
             createDateTime: '',
             creatorUsername: '',
         };
+    }
+
+    componentDidMount() {
+        const { getCommentsByProjectId, projectId } = this.props;
+        getCommentsByProjectId(projectId);    
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.projectId !== this.props.projectId) {
+            const { getCommentsByProjectId, projectId } = this.props;
+            getCommentsByProjectId(projectId);
+        }
     }
 
     componentWillMount() {
@@ -55,6 +72,7 @@ class ProjectInfo extends Component {
     handleChange = e => this.setState({ [e.target.name] : e.target.value });
 
     render() {
+        const { comments, projectId } = this.props;
         const { name, description, createDateTime, creatorUsername } = this.state;
         const d = new Date(Date.parse(createDateTime));
 
@@ -107,6 +125,15 @@ class ProjectInfo extends Component {
                         />
                     </FormGroup>
                 </AvForm>
+                <CreateComment
+                    type={COMMENT_PROJECT}
+                    parentId={projectId}
+                />
+                <div className="comments-project-wrapper">
+                    { comments.isLoading ? <p>Loading comments...</p> : comments.data.map(comment => {
+                        return <Comment comment={comment} />
+                    })}
+                </div>
             </div>
         )
     }
@@ -119,7 +146,12 @@ ProjectInfo.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-    project: state.projects.data.find(project => project.id === props.projectId)
+    project: state.projects.data.find(project => project.id === props.projectId),
+    comments: state.comments,
 });
 
-export default connect(mapStateToProps, { updateProject, closeProjectDetailSidebar })(ProjectInfo);
+export default connect(mapStateToProps, { 
+    updateProject, 
+    closeProjectDetailSidebar, 
+    getCommentsByProjectId
+ })(ProjectInfo);

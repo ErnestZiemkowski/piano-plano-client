@@ -1,7 +1,13 @@
-.issue-details-form {
-    width: 30em;
+.modal-issue-details {
+    .issue-details-form {
+        width: 47em;
+    
+        .issue-details {
+            height: 10em;
+        }
+    }
 
-    .issue-details {
-        height: 10em;
+    .issue-comment {
+        width: 47em;
     }
 }

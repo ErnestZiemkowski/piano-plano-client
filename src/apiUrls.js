@@ -33,5 +33,10 @@ module.exports = {
     dailyGoals: {
         toggle: backendURI + "/api/daily-goals",
         getAll: backendURI + "/api/daily-goals",
+    },
+    comments: {
+        projectById: id => (backendURI + `/api/comments/project/${id}`),
+        issueById: id => (backendURI + `/api/comments/card/${id}`),
+        create: backendURI + "/api/comments"
     }
 }

@@ -14,11 +14,15 @@ import {
 } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
+import CreateComment from '../../layout/CreateComment'
+import Comment from '../../layout/Comment';
+import { monthNames } from '../../../utils/dateTime';
+import { COMMENT_CARD } from '../../../actions/types';
 import { toggleDailyGoal } from '../../../actions/dailyGoals';
 import { closeIssueDetailsModal } from '../../../actions/layout';
-import { monthNames } from '../../../utils/dateTime';
-import { updateCard, getKanbanCategoriesByProjectId } from '../../../actions/kanbanCategories';
 import { createToast } from '../../../actions/toasts';
+import { getCommentsByIssueId } from '../../../actions/comments';
+import { updateCard, getKanbanCategoriesByProjectId } from '../../../actions/kanbanCategories';
 
 import "./styles.scss";
 
@@ -33,14 +37,21 @@ class IssueDetailsModal extends Component {
         };
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.issueDetailsId !== this.props.issueDetailsId) {
+            const { getCommentsByIssueId, issueDetailsId } = this.props;
+            getCommentsByIssueId(issueDetailsId);
+        }
+    }
+
     componentWillMount() {
         if(this.props.issueDetails) {
-            const { title, description, dailyGoalSet } = this.props.issueDetails;
+            const { id, title, description, dailyGoalSet } = this.props.issueDetails;
             this.setState({
                 title: title,
                 description: description,
                 isDailyGoal: dailyGoalSet
-            });    
+            });
         }
     }
     
@@ -52,7 +63,6 @@ class IssueDetailsModal extends Component {
                 description: description,
                 isDailyGoal: dailyGoalSet
             });
-    
         }
     }
 
@@ -67,7 +77,7 @@ class IssueDetailsModal extends Component {
             [e.target.name]: e.target.value
         };
 
-        updateCard(issueData, issueDetailsId);        
+        updateCard(issueData, issueDetailsId);
     }
 
     toggleIssueAsDone = () => {
@@ -109,15 +119,16 @@ class IssueDetailsModal extends Component {
     }
 
     render() {
-        const { issueDetailsId, issueDetails, kanbanCategories } = this.props;
+        const { issueDetailsId, issueDetails, kanbanCategories, comments } = this.props;
         const { title, description, isDailyGoal } = this.state;
         const d = new Date(Date.parse(issueDetails ? issueDetails.createdAt : null));
- 
+
         return (
             <Modal
                 isOpen={issueDetailsId !== -1}
                 toggle={this.closeModal}
                 backdrop={true}
+                className="modal-issue-details modal-dialog-scrollable modal-lg"
             >
                 <ModalHeader className="issue-details-header">Issue Details</ModalHeader>
                 <ModalBody>
@@ -191,10 +202,20 @@ class IssueDetailsModal extends Component {
                             </FormGroup>
                         </AvForm>
                     }
+                    <CreateComment 
+                        type={COMMENT_CARD} 
+                        parentId={issueDetailsId}
+                    />
+                    <div className="comments-wrapper">
+                        { comments.isLoading ? <p>Loading comments...</p> : comments.data.map(comment => {
+                            return <Comment comment={comment} />
+                        })}
+                    </div>
                 </ModalBody>
                 <ModalFooter>
                     <Button 
-                        color="secondary" 
+                        color="secondary"
+                        className="btn-sm"
                         onClick={this.closeModal}
                     >
                         Cancel
@@ -215,6 +236,17 @@ IssueDetailsModal.propTypes = {
             id: PropTypes.number.isRequired    
         }).isRequired,
     ),
+    comments: PropTypes.shape({
+        isLoading: PropTypes.bool.isRequired,
+        data: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.number.isRequired,
+                content: PropTypes.string.isRequired,
+                createdAt: PropTypes.string.isRequired,
+                updatedAt:PropTypes.string.isRequired,
+            }),
+        ).isRequired,
+    }).isRequired,
 }
 
 const mapStateToProps = state => {
@@ -226,7 +258,8 @@ const mapStateToProps = state => {
         kanbanCategories: state.kanbanCategories.data.map(category => ({
             id: category.id,
             title: category.title
-        }))
+        })),
+        comments: state.comments
     }
 };
 
@@ -235,5 +268,6 @@ export default connect(mapStateToProps, {
     createToast,
     toggleDailyGoal, 
     closeIssueDetailsModal, 
-    getKanbanCategoriesByProjectId 
+    getKanbanCategoriesByProjectId,
+    getCommentsByIssueId
 })(IssueDetailsModal);

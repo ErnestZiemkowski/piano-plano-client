@@ -1,0 +1,20 @@
+.comment-issue-form {
+    width: 47em;
+
+    .comment-issue-input {
+        height: 5em;
+    }   
+}
+
+.comment-project-form {
+    width: 28em;
+
+    .comment-project-input {
+        height: 5em;
+    }   
+}
+
+.comment-button-form {
+    display: flex;
+    justify-content: flex-end;
+}

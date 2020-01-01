@@ -1,0 +1,9 @@
+.issue-comment {
+    height: 13em;
+    .issue-creator {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em 0;
+        border-top: 0.01em solid #ced4da;
+    }
+}

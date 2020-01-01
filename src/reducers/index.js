@@ -7,6 +7,7 @@ import settingsReducer from './settingsReducer';
 import dailyGoalsReducer from './dailyGoalsReducer';
 import kanbanCategoriesReducer from './kanbanCategoriesReducer';
 import toastReducer from './toastReducer';
+import commentsReducer from './commentsReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
     settings: settingsReducer,
     dailyGoals: dailyGoalsReducer,
     toasts: toastReducer,
+    comments: commentsReducer,
 });

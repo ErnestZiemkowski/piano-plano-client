@@ -1,6 +1,5 @@
 .project-details-side-bar {
-
-    min-width: 20em;
+    min-width: 30em;
     padding: 1em;
     background-color: rgba(245, 245, 245, 0.8);
 
@@ -10,5 +9,9 @@
 
     #description {
         height: 25em;
+    }
+
+    .comments-project-wrapper {
+        width: 28em;
     }
 }

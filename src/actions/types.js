@@ -46,3 +46,10 @@ export const UPDATE_SETTINGS = "UPDATE_SETTINGS";
 export const CREATE_TOAST = "CREATE_TOAST";
 export const GET_TOASTS = "GET_TOASTS";
 export const DELETE_TOAST = "DELETE_TOAST";
+
+// Comments
+export const COMMENTS_LOADING = "COMMENTS_LOADING";
+export const CREATE_COMMENT = "CREATE_COMMENT";
+export const GET_COMMENTS = "GET_COMMENTS";
+export const COMMENT_CARD = "COMMENT_CARD";
+export const COMMENT_PROJECT = "COMMENT_PROJECT";
