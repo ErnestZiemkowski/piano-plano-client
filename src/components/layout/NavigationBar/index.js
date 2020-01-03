@@ -21,6 +21,7 @@ class NavigationBar extends Component {
                 <NavigationItem redirectTo="/" icon="fas fa-briefcase" itemTopic="Dashboard" />
                 <NavigationItem redirectTo="/agile-board" icon="fas fa-table" itemTopic="Agile Board" />
                 <NavigationItem redirectTo="/daily-goals" icon="fas fa-medal" itemTopic="Daily Goals" />
+                <NavigationItem redirectTo="/friends" icon="fas fa-user-alt" itemTopic="Friends" />
                 <NavigationItem redirectTo="/settings" icon="fas fa-cog" itemTopic="Settings" />
                 <NavigationItem onClick={this.handleLogout} redirectTo="/login" icon="fas fa-power-off" itemTopic="Logout" />
             </div>

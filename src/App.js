@@ -19,6 +19,7 @@ import Register from './components/auth/Register';
 import PrivateRoute from './components/layout/PrivateRoute';
 import Dashboard from './components/dashboardView/Dashboard';
 import Settings from './components/settingsView/Settings';
+import FriendsBoard from './components/friendsBoardView/FriendsBoard';
 import AgileBoard from './components/agileBoardView/AgileBoard';
 import DailyGoalsBoard from './components/dailyGoalsView/DailyGoalsBoard';
 
@@ -48,6 +49,7 @@ class App extends Component {
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute exact path="/agile-board" component={AgileBoard} />
               <PrivateRoute exact path="/settings" component={Settings} />
+              <PrivateRoute exact path="/friends" component={FriendsBoard} />
               <PrivateRoute exact path="/daily-goals" component={DailyGoalsBoard} />
             </Switch>
           </Router>

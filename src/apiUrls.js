@@ -38,5 +38,15 @@ module.exports = {
         projectById: id => (backendURI + `/api/comments/project/${id}`),
         issueById: id => (backendURI + `/api/comments/card/${id}`),
         create: backendURI + "/api/comments"
+    },
+    friends: {
+        getAll: backendURI + "/api/user/friends",
+        removeFriendById: id => (backendURI + `/api/user/remove-friend/${id}`)
+    },
+    invitations: {
+        getAll: backendURI + "/api/invitations",
+        accept: backendURI + "/api/invitations/accept",
+        create: backendURI + "/api/invitations/create",
+        removeById: id => (backendURI + `/api/invitations/remove/${id}`)
     }
 }

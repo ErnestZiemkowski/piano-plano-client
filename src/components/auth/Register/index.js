@@ -50,7 +50,7 @@ class Register extends Component {
     
     render() {
         const { username, email, password, errors } = this.state;
-        console.log(this.state);
+
         return (
             <div className="register-wrapper">
                 <div className="image-background"></div>
