@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Loader from 'react-loaders';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Header from "../../layout/Header";
 import NavigationBar from "../../layout/NavigationBar";
@@ -37,7 +37,7 @@ const DailyGoalsBoard = ({ dailyGoals, getDailyGoals }) => {
                             <Loader type="ball-scale-multiple" className="loader-center" /> : dailyGoals.data.map(dailyGoal => {
                                 return <div className="daily-goal" key={ dailyGoal.id }>
                                     <FontAwesomeIcon icon={faStar} />
-                                    {' '}<b>{ dailyGoal.card.cardCode }</b> - <span className={ dailyGoal.card.isDone ? 'line-through' : '' }>{ dailyGoal.card.title }</span>
+                                    &nbsp;<b>{ dailyGoal.card.cardCode }</b> - <span className={ dailyGoal.card.isDone ? 'line-through' : '' }>{ dailyGoal.card.title }</span>
                                 </div>
                         })}
                     </div>
