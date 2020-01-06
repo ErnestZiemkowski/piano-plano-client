@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Table } from 'reactstrap';
 import Loader from 'react-loaders';
+import { Table } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { removeFriend } from '../../../actions/friends';
 
@@ -33,7 +35,10 @@ export class Friends extends Component {
                                 <th scope="row">{ index + 1 }</th>
                                 <td>{ friend.username }</td>
                                 <td className="cell-actions">
-                                    <i onClick={() => removeFriend(friend.id)} className="fas fa-times"/>
+                                    <FontAwesomeIcon 
+                                        icon={faTimes}
+                                        onClick={() => removeFriend(friend.id)}
+                                    />
                                 </td>
                             </tr>;
                         }) }

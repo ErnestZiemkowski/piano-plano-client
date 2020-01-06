@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import NavigationItem from '../NavigationItem';
 import { logout } from '../../../actions/auth';
+import { faBriefcase, faTable, faMedal, faUserAlt, faCog, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 
 import './styles.scss';
 
@@ -18,12 +19,37 @@ class NavigationBar extends Component {
         
         return (
             <div className={`navigation-bar-wrapper ${isNavigationSidebarOpen ? '' : 'd-none'}`}>
-                <NavigationItem redirectTo="/" icon="fas fa-briefcase" itemTopic="Dashboard" />
-                <NavigationItem redirectTo="/agile-board" icon="fas fa-table" itemTopic="Agile Board" />
-                <NavigationItem redirectTo="/daily-goals" icon="fas fa-medal" itemTopic="Daily Goals" />
-                <NavigationItem redirectTo="/friends" icon="fas fa-user-alt" itemTopic="Friends" />
-                <NavigationItem redirectTo="/settings" icon="fas fa-cog" itemTopic="Settings" />
-                <NavigationItem onClick={this.handleLogout} redirectTo="/login" icon="fas fa-power-off" itemTopic="Logout" />
+                <NavigationItem 
+                    redirectTo="/" 
+                    icon={faBriefcase} 
+                    itemTopic="Dashboard" 
+                />
+                <NavigationItem 
+                    redirectTo="/agile-board" 
+                    icon={faTable} 
+                    itemTopic="Agile Board" 
+                />
+                <NavigationItem 
+                    redirectTo="/daily-goals" 
+                    icon={faMedal} 
+                    itemTopic="Daily Goals" 
+                />
+                <NavigationItem 
+                    redirectTo="/friends" 
+                    icon={faUserAlt} 
+                    itemTopic="Friends" 
+                />
+                <NavigationItem 
+                    redirectTo="/settings" 
+                    icon={faCog} 
+                    itemTopic="Settings" 
+                />
+                <NavigationItem 
+                    redirectTo="/login" 
+                    icon={faPowerOff} 
+                    itemTopic="Logout" 
+                    onClick={this.handleLogout} 
+                />
             </div>
         )    
     }

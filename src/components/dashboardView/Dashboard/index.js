@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
 import Loader from 'react-loaders';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import Header from "../../layout/Header";
 import ProjectInfo from '../ProjectInfo';
@@ -52,7 +54,7 @@ class Dashboard extends Component {
                     <BackgroundBoard>
                         <div className="projects-board-actions">
                             <span onClick={this.toggleModal} className="badge badge-dark" data-toggle="tooltip" data-placement="bottom" title="Create new project">
-                                <i className="fas fa-plus" />
+                                <FontAwesomeIcon icon={faPlus} />
                             </span>
                         </div>
                         <div className="widgets-wrapper">

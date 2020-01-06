@@ -5,7 +5,6 @@ import {
 } from './types';
 
 export const createToast = toastData => dispatch => {
-    console.log('kutas');
     dispatch({
         type: CREATE_TOAST,
         payload: toastData

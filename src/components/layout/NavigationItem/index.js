@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import "./styles.scss";
 
 const NavigationItem = props => {
@@ -11,7 +13,10 @@ const NavigationItem = props => {
             className="navigation-item-wrapper" 
             onClick={props.onClick}
         >
-            <i className={`text-light ${props.icon}`} /> 
+            <FontAwesomeIcon 
+                icon={props.icon}
+                className="text-light"
+            />
             <span className="text-light">{` ${props.itemTopic}`}</span>
         </Link>
     )

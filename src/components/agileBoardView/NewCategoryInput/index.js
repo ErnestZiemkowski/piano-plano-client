@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import { createKanbanCategory } from "../../../actions/kanbanCategories";
@@ -53,9 +55,10 @@ class NewCategoryInput extends Component {
                         maxLength: {value: 30}
                     }}
                 />
-                <i
+                <FontAwesomeIcon 
+                    icon={faPlus} 
                     onClick={this.handleCreateCategory} 
-                    className="fas fa-plus add-column" 
+                    className="add-column"
                     data-toggle="tooltip" 
                     data-placement="bottom" 
                     title="Add category" 

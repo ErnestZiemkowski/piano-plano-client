@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 import { daysNames, monthNames } from '../../../utils/dateTime';
 import { toggleNavigationSidebar } from '../../../actions/layout';
+
 import './styles.scss';
 
 class Header extends Component {
@@ -43,9 +46,9 @@ class Header extends Component {
                         data-placement="bottom" 
                         title="Create new project"
                     >
-                        <i className="fas fa-bars" />
+                        <FontAwesomeIcon icon={faBars} />
                     </span> {' '}
-                    Welcome back, {userName}
+                    Hello, {userName}
                 </span>
                 <span className="text-light">
                     { time }

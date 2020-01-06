@@ -12,6 +12,9 @@ import {
     Label, 
     CardImg
 } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImages, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+
 import { changeThemeOptions } from '../../../utils/background';
 import { updateSettings } from '../../../actions/settings';
 
@@ -59,13 +62,15 @@ class ThemeChange extends Component {
         return (
             <Fragment>
                 <Form className="theme-change-wrapper">
-                    <Label><i className="fas fa-caret-right"/> Theme:</Label>
+                    <Label>
+                        <FontAwesomeIcon icon={faCaretRight} /> Theme:
+                    </Label>
                     <Button
                         color="info" 
                         onClick={this.toggleModal}
                         className="btn btn-sm theme-change-btn"
                     >
-                        <i class="fas fa-images"/> Browse
+                        <FontAwesomeIcon icon={faImages} /> Browse
                     </Button>
                 </Form>
                 <Modal 

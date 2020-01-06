@@ -3,17 +3,19 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Loader from 'react-loaders';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 import Header from "../../layout/Header";
 import NavigationBar from "../../layout/NavigationBar";
 import ContentWrapper from "../../layout/ContentWrapper";
 import ImageBackground from "../../layout/ImageBackground";
 import BackgroundBoard from "../../layout/BackgroundBoard";
+import Card from '../../agileBoardView/Card';
 
 import { getDailyGoals } from "../../../actions/dailyGoals";
 
 import "./styles.scss";
-import Card from '../../agileBoardView/Card';
 
 export class DailyGoalsBoard extends Component {
 
@@ -38,7 +40,11 @@ export class DailyGoalsBoard extends Component {
                             { dailyGoals.isLoading ? 
                                 <Loader type="ball-scale-multiple" className="loader-center" /> : dailyGoals.data.map(dailyGoal => {
                                     return <div className="daily-goal">
-                                        <i className="fas fa-star"/> <b>{ dailyGoal.card.cardCode }</b> - <span className={ dailyGoal.card.isDone ? 'line-through' : '' }>{ dailyGoal.card.title }</span>
+                                        <FontAwesomeIcon
+                                            icon={faStar}
+                                        >
+                                            <b>{ dailyGoal.card.cardCode }</b> - <span className={ dailyGoal.card.isDone ? 'line-through' : '' }>{ dailyGoal.card.title }</span>
+                                        </FontAwesomeIcon>
                                     </div>
                             })}
                         </div>

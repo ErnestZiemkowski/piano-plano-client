@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { Table } from 'reactstrap';
 import Loader from 'react-loaders';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { acceptInvitation, removeInvitation } from '../../../actions/invitations';
 
@@ -29,8 +31,14 @@ export class Invitations extends Component {
                                 <th scope="row">{ index + 1 }</th>
                                 <td>{ invitation.receiverEmail }</td>
                                 <td className="cell-actions">
-                                    <i onClick={() => acceptInvitation({ id: invitation.id })} className="fas fa-check"/>
-                                    <i onClick={() => removeInvitation(invitation.id)} className="fas fa-times"/>
+                                    <FontAwesomeIcon 
+                                        icon={faCheck} 
+                                        onClick={() => acceptInvitation({ id: invitation.id })} 
+                                    />
+                                    <FontAwesomeIcon 
+                                        icon={faTimes} 
+                                        onClick={() => removeInvitation(invitation.id)} 
+                                    />
                                 </td>
                             </tr>;
                         }) }

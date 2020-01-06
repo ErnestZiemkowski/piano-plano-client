@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 
 import { openProjectDetailSidebarById } from '../../../actions/layout';
@@ -42,19 +44,13 @@ class ProjectWidget extends Component {
                     <div className="project-details">
                         <h2 className="project-name">{ name }</h2>
                         <div className="project-actions">
-                            <i 
-                                onClick={() => openProjectDetailSidebarById(id)} 
-                                className="fas fa-info-circle" 
-                                data-toggle="tooltip" 
-                                data-placement="top" 
-                                title="Show details about project"
+                            <FontAwesomeIcon 
+                                icon={faInfoCircle}
+                                onClick={() => openProjectDetailSidebarById(id)}
                             />
-                            <i
-                                onClick={this.toggleModal} 
-                                className="fas fa-trash" 
-                                data-toggle="tooltip" 
-                                data-placement="top" 
-                                title="Delete project"
+                            <FontAwesomeIcon 
+                                icon={faTrash}
+                                onClick={this.toggleModal}
                             />
                         </div>
                     </div>
@@ -86,8 +82,18 @@ class ProjectWidget extends Component {
                         irreversible effect consequences.
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="danger" onClick={this.handleDelete}>Remove</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
+                        <Button
+                            color="danger" 
+                            onClick={this.handleDelete}
+                        >
+                            Remove
+                        </Button>{' '}
+                        <Button 
+                            color="secondary" 
+                            onClick={this.toggleModal}
+                        >
+                            Cancel
+                        </Button>
                     </ModalFooter>
                 </Modal>
             </div>
