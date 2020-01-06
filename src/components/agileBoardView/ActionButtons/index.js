@@ -5,6 +5,7 @@ import { Button } from 'reactstrap';
 
 import './styles.scss';
 
+
 const ActionButtons = ({ projectsNames, currentProject, kanbanCategoriesLength, toggleModal, handleProjectChange }) => (
     <div className="agile-board-actions">
         <Button 
@@ -55,4 +56,4 @@ ActionButtons.propTypes = {
     toggleModal: PropTypes.func.isRequired,
 }
 
-export default ActionButtons
+export default ActionButtons;

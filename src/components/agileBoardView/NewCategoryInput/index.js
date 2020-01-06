@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -11,67 +11,50 @@ import { createKanbanCategory } from "../../../actions/kanbanCategories";
 import "./styles.scss";
 
 
-class NewCategoryInput extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            newCategoryName: ''
-        };
-    }
+const NewCategoryInput = ({ projectId, createKanbanCategory, kanbanCategoriesCount }) => {
+    const [categoryName, setCategoryName] = useState('');
 
-    handleChange = e => {
-        this.setState({ [e.target.name] : e.target.value });
-    };
-
-    handleCreateCategory = e => {
-        e.preventDefault();
-        const { projectId, createKanbanCategory, kanbanCategoriesCount, handleUpdate } = this.props;
-        const { newCategoryName } = this.state;
- 
+    const handleCreateCategory = e => {
+        e.preventDefault(); 
         const kanbanCategoryData = {
-            title: newCategoryName,
+            title: categoryName,
             projectId: projectId,
             position: kanbanCategoriesCount + 1
         };
 
         createKanbanCategory(kanbanCategoryData);
-        this.setState({ newCategoryName: '' });
+        setCategoryName('');
     };
 
-
-    render() {
-        const { newCategoryName } = this.state;
-
-        return (
-            <AvForm className="create-category-form">
-                <AvField 
-                    name="newCategoryName"
-                    className="create-category-input"
-                    placeholder="New category"
-                    value={newCategoryName}
-                    onChange={this.handleChange}
-                    validate={{
-                        minLength: {value: 2, errorMessage: 'Kanban category title must be between 5 and 75 characters'},
-                        maxLength: {value: 30}
-                    }}
-                />
-                <FontAwesomeIcon 
-                    icon={faPlus} 
-                    onClick={this.handleCreateCategory} 
-                    className="add-column"
-                    data-toggle="tooltip" 
-                    data-placement="bottom" 
-                    title="Add category" 
-                />
-            </AvForm>
-        )
-    }
-}
+    return (
+        <AvForm className="create-category-form">
+            <AvField 
+                name="newCategoryName"
+                className="create-category-input"
+                placeholder="New category"
+                value={categoryName}
+                onChange={e => setCategoryName(e.target.value)}
+                validate={{
+                    minLength: {value: 2, errorMessage: 'Kanban category title must be between 5 and 75 characters'},
+                    maxLength: {value: 30}
+                }}
+            />
+            <FontAwesomeIcon 
+                icon={faPlus} 
+                onClick={handleCreateCategory} 
+                className="add-column"
+                data-toggle="tooltip" 
+                data-placement="bottom" 
+                title="Add category" 
+            />
+        </AvForm>
+    );
+};
 
 NewCategoryInput.propTypes = {
     projectId: PropTypes.number.isRequired,
     createKanbanCategory: PropTypes.func.isRequired,
     kanbanCategoriesCount: PropTypes.number.isRequired,
-}
+};
 
 export default connect(null, { createKanbanCategory })(NewCategoryInput)

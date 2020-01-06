@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 
 import Loader from 'react-loaders';
 import KanbanBoard, { moveLane, moveCard } from '@lourenci/react-kanban';
+
 import NewCategoryInput from "../NewCategoryInput";
 import Card from "../Card";
 import IssueDetailsModal from '../IssueDetailsModal';
+
 import { 
     getKanbanCategoriesByProjectId, 
     deleteKanbanCategory, 
@@ -16,29 +18,30 @@ import {
 } from "../../../actions/kanbanCategories";
 import { sortKanbanCategoriesByPosition } from '../../../utils/kanbanBoard';
 
-const Board = props => {
+const Board = ({ deleteCard, deleteKanbanCategory, updateKanbanCategory, rearangeKanbanBoard, kanbanCategories, projectId }) => {
 
-    const [board, setBoard] = useState({lanes: sortKanbanCategoriesByPosition(props.kanbanCategories.data)});
+    const [board, setBoard] = useState({lanes: sortKanbanCategoriesByPosition(kanbanCategories.data)});
 
     useEffect(() => {
-        setBoard({lanes: sortKanbanCategoriesByPosition(props.kanbanCategories.data)});
-    }, [props.kanbanCategories.data]);
+        setBoard({ lanes: sortKanbanCategoriesByPosition(kanbanCategories.data) });
+    }, []);
+
+    useEffect(() => {
+        setBoard({ lanes: sortKanbanCategoriesByPosition(kanbanCategories.data) });
+    }, [kanbanCategories.data]);
 
     const handleRemoveCategory = lane => {
-        const { deleteKanbanCategory } = props;
         deleteKanbanCategory(lane.id);
     };
 
     const handleRenameCategory = (lane, laneTitle) => {
-        const { updateKanbanCategory } = props;
-        const kanbanCategoryData = {
+        const kanbanCategory = {
             title: laneTitle
         };
-        updateKanbanCategory(kanbanCategoryData, lane.id);
+        updateKanbanCategory(kanbanCategory, lane.id);
     };
 
     const handleKanbanReposition = (source, destination, removedItemType) => {
-        const { rearangeKanbanBoard } = props;
         let newBoard;
         if(removedItemType === 'lane') newBoard = moveLane(board, source, destination); 
         if(removedItemType === 'card') newBoard = moveCard(board, source, destination); 
@@ -53,8 +56,7 @@ const Board = props => {
         setBoard({lanes: kanbanCategoriesData});
     };
 
-    const handleCardRemove = (id) => {
-        const { deleteCard } = props;
+    const handleCardRemove = id => {
         const newBoard = board.lanes.map(lane => {
             const cards = lane.cards.filter(card => card.id !== id)
             return {
@@ -66,7 +68,6 @@ const Board = props => {
         deleteCard(id);
     }
 
-    const { projectId, kanbanCategories } = props;
     if(kanbanCategories.isLoading) return <Loader type="ball-scale-multiple" className="loader-center" />;
     if(board) {
         return (
@@ -112,35 +113,36 @@ Board.propTypes = {
         data: PropTypes.arrayOf(PropTypes.shape({
                 id: PropTypes.number.isRequired,
                 title: PropTypes.string.isRequired,
-                cards: PropTypes.arrayOf(
-                    PropTypes.shape({
-                        id: PropTypes.number.isRequired,
-                        createDateTime: PropTypes.string.isRequired,
-                        title: PropTypes.string.isRequired,
-                        description: PropTypes.string.isRequired,
-                        position: PropTypes.number.isRequired,
-                        creator: PropTypes.shape({
-                            id: PropTypes.number.isRequired,
-                            username: PropTypes.string.isRequired,
-                            email: PropTypes.string.isRequired,
-                            roles: PropTypes.arrayOf(
-                                PropTypes.shape({
-                                    id: PropTypes.number.isRequired,
-                                    name: PropTypes.string.isRequired,
-                                }),
-                            ).isRequired,
-                        }),
-                    }),
-                ),
+                cards: PropTypes.array.isRequired,
+                // cards: PropTypes.arrayOf(
+                //     PropTypes.shape({
+                //         id: PropTypes.number.isRequired,
+                //         createDateTime: PropTypes.string.isRequired,
+                //         title: PropTypes.string.isRequired,
+                //         description: PropTypes.string.isRequired,
+                //         position: PropTypes.number.isRequired,
+                //         creator: PropTypes.shape({
+                //             id: PropTypes.number.isRequired,
+                //             username: PropTypes.string.isRequired,
+                //             email: PropTypes.string.isRequired,
+                //             roles: PropTypes.arrayOf(
+                //                 PropTypes.shape({
+                //                     id: PropTypes.number.isRequired,
+                //                     name: PropTypes.string.isRequired,
+                //                 }),
+                //             ).isRequired,
+                //         }),
+                //     }),
+                // ),
             }),
         ).isRequired,}),
     projectId: PropTypes.number.isRequired,
 };
 
-export default connect(null, { 
+export default connect( null, {
     getKanbanCategoriesByProjectId, 
     deleteKanbanCategory, 
     updateKanbanCategory,
     rearangeKanbanBoard,
     deleteCard,
-})(Board);
+} )(Board);
