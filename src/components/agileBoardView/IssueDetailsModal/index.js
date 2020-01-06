@@ -21,8 +21,8 @@ import { monthNames } from '../../../utils/dateTime';
 import { createToast } from '../../../actions/toasts';
 import { COMMENT_CARD } from '../../../actions/types';
 import { toggleDailyGoal } from '../../../actions/dailyGoals';
-import { closeIssueDetailsModal } from '../../../actions/layout';
 import { getCommentsByIssueId } from '../../../actions/comments';
+import { closeIssueDetailsModal } from '../../../actions/layout';
 import { updateCard, getKanbanCategoriesByProjectId } from '../../../actions/kanbanCategories';
 
 import "./styles.scss";
@@ -34,15 +34,17 @@ const IssueDetailsModal = props => {
     const [isDailyGoal, setDailyGoal] = useState(false); 
 
     useEffect(() => {
-        props.getCommentsByIssueId(issueDetailsId);
-    }, [issueDetailsId]);
+        props.getCommentsByIssueId(props.issueDetailsId);
+    }, [props.issueDetailsId]);
 
     useEffect(() => {
-        const { title, description, dailyGoalSet } = props.issueDetails;
-        setTitle(title);
-        setDescription(description);
-        setDailyGoal(dailyGoalSet);
-    }, [issueDetails]);
+        if (props.issueDetails) {
+            const { title, description, dailyGoalSet } = props.issueDetails;
+            setTitle(title);
+            setDescription(description);
+            setDailyGoal(dailyGoalSet);    
+        }
+    }, [props.issueDetails]);
 
     const handleBlur = e => {
         e.preventDefault();
@@ -50,16 +52,16 @@ const IssueDetailsModal = props => {
             [e.target.name]: e.target.value
         };
 
-        props.updateCard(issueData, issueDetailsId);
+        props.updateCard(issueData, props.issueDetailsId);
     };
 
-    const toggleIssueAsDone = () => {
-        const issueData = {
-            done: !issueDetails.done
-        };
+    // const toggleIssueAsDone = () => {
+    //     const issueData = {
+    //         done: !issueDetails.done
+    //     };
 
-        props.updateCard(issueData, issueDetailsId);
-    };
+    //     props.updateCard(issueData, props.issueDetailsId);
+    // };
 
     const handleStatusChange = e => {
         e.preventDefault();
@@ -72,34 +74,34 @@ const IssueDetailsModal = props => {
             type: 'info'
         };
 
-        props.updateCard(issueData, issueDetailsId);
+        props.updateCard(issueData, props.issueDetailsId);
         props.createToast(toast);
     };
 
     const toggleDailyGoal = () => {
         const dailyGoal = {
-            cardId: issueDetailsId
+            cardId: props.issueDetailsId
         };
 
         props.toggleDailyGoal(dailyGoal);
         props.setDailyGoal(null);
     };
 
-    const d = new Date(Date.parse(issueDetails ? issueDetails.createdAt : null));
+    const d = new Date(Date.parse(props.issueDetails ? props.issueDetails.createdAt : null));
 
     return (
         <Modal
-            isOpen={issueDetailsId !== -1}
+            isOpen={props.issueDetailsId !== -1}
             toggle={() => props.closeIssueDetailsModal()}
             backdrop={true}
             className="modal-issue-details modal-dialog-scrollable modal-lg"
         >
             <ModalHeader className="issue-details-header">Issue Details</ModalHeader>
             <ModalBody>
-                {!issueDetails ? <Loader type="ball-scale-multiple" /> :
+                {!props.issueDetails ? <Loader type="ball-scale-multiple" /> :
                     <AvForm className="issue-details-form">
                         <FormGroup>
-                            <Label>Creator: { issueDetails.creator.username }</Label>
+                            <Label>Creator: { props.issueDetails.creator.username }</Label>
                         </FormGroup>
                         <FormGroup>
                             <Label>Created at: { d.getDate() } { monthNames[d.getMonth()] } { d.getFullYear() } { d.getHours() }:{ d.getMinutes() }</Label>
@@ -114,10 +116,10 @@ const IssueDetailsModal = props => {
                                 aria-haspopup="true" 
                                 aria-expanded="false"
                             >
-                                { issueDetails.kanbanCategoryTitle }
+                                { props.issueDetails.kanbanCategoryTitle }
                             </Button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                { kanbanCategories.map((category, index) => 
+                                { props.kanbanCategories.map((category, index) => 
                                     (<Button 
                                         key={index} 
                                         id={category.id}
@@ -168,10 +170,10 @@ const IssueDetailsModal = props => {
                 }
                 <CreateComment 
                     type={COMMENT_CARD} 
-                    parentId={issueDetailsId}
+                    parentId={props.issueDetailsId}
                 />
                 <div className="comments-wrapper">
-                    { comments.isLoading ? <p>Loading comments...</p> : comments.data.map(comment => {
+                    { props.comments.isLoading ? <p>Loading comments...</p> : props.comments.data.map(comment => {
                         return <Comment comment={comment} />
                     })}
                 </div>
@@ -190,7 +192,6 @@ const IssueDetailsModal = props => {
 }
 
 IssueDetailsModal.propTypes = {
-    isModalOpen: PropTypes.bool.isRequired,
     toggleDailyGoal: PropTypes.func.isRequired,
     kanbanCategories: PropTypes.arrayOf(
         PropTypes.shape({
@@ -209,6 +210,11 @@ IssueDetailsModal.propTypes = {
             }),
         ).isRequired,
     }).isRequired,
+    updateCard: PropTypes.func.isRequired,
+    createToast: PropTypes.func.isRequired,
+    closeIssueDetailsModal: PropTypes.func.isRequired,
+    getKanbanCategoriesByProjectId: PropTypes.func.isRequired,
+    getCommentsByIssueId: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {

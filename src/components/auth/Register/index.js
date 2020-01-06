@@ -10,7 +10,7 @@ import { register } from "../../../actions/auth";
 
 import './styles.scss';
 
-const Register = ({ auth, history, register }) => {
+const Register = ({ auth, history, register, errorsData }) => {
 
     const [ username, setUsername ] = useState('');
     const [ email, setEmail ] = useState('');
@@ -22,8 +22,8 @@ const Register = ({ auth, history, register }) => {
     }, []);
 
     useEffect(() => {
-        if (errors) setErrors(errors);
-    }, [errors]);
+        setErrors(errors);
+    }, [errorsData]);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -115,12 +115,18 @@ Register.propTypes = {
     register: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired,
+    errorsData: PropTypes.shape({
+        timestamp: PropTypes.string,
+        status: PropTypes.number,
+        error: PropTypes.string,
+        message: PropTypes.string,
+        path: PropTypes.string,
+    }),
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    errors: state.errors
+    errorsData: state.errors
 });
   
 export default connect(mapStateToProps, { register })(withRouter(Register));

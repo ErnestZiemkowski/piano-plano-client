@@ -47,9 +47,9 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
-              <PrivateRoute exact path="/agile-board" component={AgileBoard} />
-              <PrivateRoute exact path="/settings" component={Settings} />
               <PrivateRoute exact path="/friends" component={FriendsBoard} />
+              <PrivateRoute exact path="/settings" component={Settings} />
+              <PrivateRoute exact path="/agile-board" component={AgileBoard} />
               <PrivateRoute exact path="/daily-goals" component={DailyGoalsBoard} />
             </Switch>
           </Router>

@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-
-import Loader from 'react-loaders';
 
 import Header from "../../layout/Header";
 import NavigationBar from "../../layout/NavigationBar";
@@ -19,38 +17,32 @@ import { getFriends } from '../../../actions/friends';
 import "./styles.scss";
 
 
-class FriendsBoard extends Component {
-    constructor(props) {
-        super(props);
-    }
+const FriendsBoard = ({ getFriends, getInvitations }) => {
 
-    componentDidMount() {
-        const { getFriends, getInvitations } = this.props;
+    useEffect(() => {
         getFriends();
         getInvitations();
-    }
+    }, []);
 
-    render() {
-        return (
-            <ImageBackground>
-                <NavigationBar />
-                <ContentWrapper>
-                    <Header />
-                    <BackgroundBoard>
-                        <CreateInvitation />
-                        <div className="friends-board">
-                            <Friends />
-                            <Invitations />
-                        </div>
-                    </BackgroundBoard>
-                </ContentWrapper>            
-            </ImageBackground>
-        )
-    }
+    return (
+        <ImageBackground>
+            <NavigationBar />
+            <ContentWrapper>
+                <Header />
+                <BackgroundBoard>
+                    <CreateInvitation />
+                    <div className="friends-board">
+                        <Friends />
+                        <Invitations />
+                    </div>
+                </BackgroundBoard>
+            </ContentWrapper>            
+        </ImageBackground>
+    )
 }
+FriendsBoard.propTypes = {
+    getFriends: PropTypes.func.isRequired,
+    getInvitations: PropTypes.func.isRequired,
+};
 
-const mapStateToProps = state => ({
-    
-});
-
-export default connect(mapStateToProps, { getFriends, getInvitations })(FriendsBoard)
+export default connect(null, { getFriends, getInvitations })(FriendsBoard)

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -20,100 +20,86 @@ import { updateSettings } from '../../../actions/settings';
 
 import './styles.scss';
 
-class ThemeChange extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isModalOpen: false,
-            background: ''
-        };
+const ThemeChange = ({ currentBackgroundTheme, updateSettings }) => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [background, setBackground] = useState('');
+
+    useEffect(() => {
+        setBackground(currentBackgroundTheme + '.png');
+    }, [currentBackgroundTheme])
+
+
+    const handleBackgroundThemeChange = e => {
+        setBackground(e.target.name);
     }
 
-    componentWillMount() {
-        const { currentBackgroundTheme } = this.props;
-        this.setState({ background: currentBackgroundTheme + '.png' });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.currentBackgroundTheme) this.setState({ background: nextProps.currentBackgroundTheme });
-    }
-    
-    toggleModal = () => this.setState({ isModalOpen: !this.state.isModalOpen });
-
-    handleBackgroundThemeChange = e => {
-        e.preventDefault();
-        this.setState({ background: e.target.name });
-    }
-
-    handleSubmit = () => {
-        const { updateSettings } = this.props;
-        const { background } = this.state;
+    const handleSubmit = () => {
         const settingsData = {
             backgroundImageUrl: background
         };
 
         updateSettings(settingsData);
-        this.toggleModal();
+        setIsModalOpen(!isModalOpen);
     }
 
-    render() {
-        const { isModalOpen, background } = this.state;
 
-        return (
-            <Fragment>
-                <Form className="theme-change-wrapper">
-                    <Label>
-                        <FontAwesomeIcon icon={faCaretRight} /> Theme:
-                    </Label>
-                    <Button
-                        color="info" 
-                        onClick={this.toggleModal}
-                        className="btn btn-sm theme-change-btn"
-                    >
-                        <FontAwesomeIcon icon={faImages} /> Browse
-                    </Button>
-                </Form>
-                <Modal 
-                    isOpen={isModalOpen}
-                    toggle={this.toggleModal}
-                    backdrop={true}
-                    className="theme-change-modal modal-dialog-scrollable"
+    return (
+        <Fragment>
+            <Form className="theme-change-wrapper">
+                <Label>
+                    <FontAwesomeIcon icon={faCaretRight} /> Theme:
+                </Label>
+                <Button
+                    color="info" 
+                    onClick={() => setIsModalOpen(!isModalOpen)}
+                    className="btn btn-sm theme-change-btn"
                 >
-                    <ModalHeader>Change themes</ModalHeader>
-                    <ModalBody>
-                        {changeThemeOptions.map(theme => (
-                            <CardImg
-                                top
-                                name={theme}
-                                width="100%"
-                                className={theme === background ? 'theme theme-active' : 'theme'}
-                                onClick={this.handleBackgroundThemeChange}
-                                src={require(`../../../images/${theme}.png`)} 
-                            />))}
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button 
-                            color="primary" 
-                            onClick={this.handleSubmit}
-                            className="btn btn-sm"
-                        >
-                            Save
-                        </Button>{' '}
-                        <Button 
-                            color="secondary" 
-                            onClick={this.toggleModal}
-                            className="btn btn-sm"
-                        >
-                            Cancel
-                        </Button>
-                    </ModalFooter>
-                </Modal>
-            </Fragment>
-        )
-    }
-}
+                    <FontAwesomeIcon icon={faImages} /> Browse
+                </Button>
+            </Form>
+            <Modal 
+                isOpen={isModalOpen}
+                toggle={() => setIsModalOpen(!isModalOpen)}
+                backdrop={true}
+                className="theme-change-modal modal-dialog-scrollable"
+            >
+                <ModalHeader>Change themes</ModalHeader>
+                <ModalBody>
+                    {changeThemeOptions.map(theme => (
+                        <CardImg
+                            top
+                            name={theme}
+                            width="100%"
+                            className={theme === background ? 'theme theme-active' : 'theme'}
+                            onClick={handleBackgroundThemeChange}
+                            src={require(`../../../images/${theme}.png`)} 
+                        />))}
+                </ModalBody>
+                <ModalFooter>
+                    <Button 
+                        color="primary" 
+                        onClick={handleSubmit}
+                        className="btn btn-sm"
+                    >
+                        Save
+                    </Button>{' '}
+                    <Button 
+                        color="secondary" 
+                        onClick={() => setIsModalOpen(!isModalOpen)}
+                        className="btn btn-sm"
+                    >
+                        Cancel
+                    </Button>
+                </ModalFooter>
+            </Modal>
+        </Fragment>
+    )
+};
+
 ThemeChange.propTypes = {
     currentBackgroundTheme: PropTypes.string.isRequired,
+    updateSettings: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

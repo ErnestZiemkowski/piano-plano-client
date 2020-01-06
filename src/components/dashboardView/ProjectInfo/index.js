@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -17,51 +17,30 @@ import { monthNames } from '../../../utils/dateTime';
 import './styles.scss';
 
 
-class ProjectInfo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            description: '',
-            createDateTime: '',
-            creatorUsername: '',
-        };
-    }
+const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject, comments }) => {
 
-    componentDidMount() {
-        const { getCommentsByProjectId, projectId } = this.props;
-        getCommentsByProjectId(projectId);    
-    }
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [createDateTime, setCreateDateTime] = useState('')
+    const [creatorUsername, setCreatorUsername] = useState('')
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.projectId !== this.props.projectId) {
-            const { getCommentsByProjectId, projectId } = this.props;
-            getCommentsByProjectId(projectId);
-        }
-    }
+    useEffect(() => {
+        getCommentsByProjectId(projectId);
+    }, []);
 
-    componentWillMount() {
-        this.setState({
-            name: this.props.project.name,
-            description: this.props.project.description,
-            createDateTime: this.props.project.createDateTime,
-            creatorUsername: this.props.project.creator.username,
-        })            
-    }
+    useEffect(() => {
+        getCommentsByProjectId(projectId);
+    }, [ projectId ]);
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.project) {
-            this.setState({
-                name: nextProps.project.name,
-                description: nextProps.project.description,
-                createDateTime: nextProps.project.createDateTime,
-                creatorUsername: nextProps.project.creator.username,
-            });
-        }
-    }
+    useEffect(() => {
+        const { name, description, createDateTime, creator } = project;
+        setName(name);
+        setDescription(description);
+        setCreateDateTime(createDateTime);
+        setCreatorUsername(creator.username);
+    }, [project])
 
-    handleBlur = e => {
-        const { updateProject, projectId } = this.props;
+    const handleBlur = e => {
         const projectData = {
             [e.target.name]: e.target.value
         };
@@ -69,75 +48,70 @@ class ProjectInfo extends Component {
         updateProject(projectData, projectId);
     }    
 
-    handleChange = e => this.setState({ [e.target.name] : e.target.value });
+    const d = new Date(Date.parse(createDateTime));
 
-    render() {
-        const { comments, projectId } = this.props;
-        const { name, description, createDateTime, creatorUsername } = this.state;
-        const d = new Date(Date.parse(createDateTime));
-
-        return (
-            <div className="project-details-side-bar">
-                <Button 
-                    className="close" 
-                    type="button" 
-                    aria-label="Close"
-                    onClick={() => this.props.closeProjectDetailSidebar()} 
-                >
-                    <span aria-hidden="true">&times;</span>
-                </Button>
-                <h1 className="project-details-header">Project details</h1>
-                <AvForm>
-                    <FormGroup>
-                        <Label>Creator: { creatorUsername }</Label>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Created at: { d.getDate() } { monthNames[d.getMonth()] } { d.getFullYear() } { d.getHours() }:{ d.getMinutes() }</Label>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Name</Label>
-                        <AvField 
-                            id="name" 
-                            name="name"
-                            type="text"
-                            value={name}
-                            onBlur={this.handleBlur}
-                            onChange={this.handleChange} 
-                            validate={{
-                                required: {value: true, errorMessage: 'Project name cannot be blank'},
-                                minLength: {value: 5, errorMessage: 'Project name must be between 5 and 75 characters'},
-                                maxLength: {value: 75}
-                            }}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Description</Label>
-                        <AvField 
-                            id="description" 
-                            name="description"
-                            type="textarea"
-                            value={description}
-                            onBlur={this.handleBlur}
-                            onChange={this.handleChange} 
-                            validate={{
-                                maxLength: {value: 500}
-                            }}
-                        />
-                    </FormGroup>
-                </AvForm>
-                <CreateComment
-                    type={COMMENT_PROJECT}
-                    parentId={projectId}
-                />
-                <div className="comments-project-wrapper">
-                    { comments.isLoading ? <p>Loading comments...</p> : comments.data.map(comment => {
-                        return <Comment comment={comment} />
-                    })}
-                </div>
+    return (
+        <div className="project-details-side-bar">
+            <Button 
+                className="close" 
+                type="button" 
+                aria-label="Close"
+                onClick={() => this.props.closeProjectDetailSidebar()} 
+            >
+                <span aria-hidden="true">&times;</span>
+            </Button>
+            <h1 className="project-details-header">Project details</h1>
+            <AvForm>
+                <FormGroup>
+                    <Label>Creator: { creatorUsername }</Label>
+                </FormGroup>
+                <FormGroup>
+                    <Label>Created at: { d.getDate() } { monthNames[d.getMonth()] } { d.getFullYear() } { d.getHours() }:{ d.getMinutes() }</Label>
+                </FormGroup>
+                <FormGroup>
+                    <Label>Name</Label>
+                    <AvField 
+                        id="name" 
+                        name="name"
+                        type="text"
+                        value={name}
+                        onBlur={handleBlur}
+                        onChange={e => setName(e.target.value)} 
+                        validate={{
+                            required: {value: true, errorMessage: 'Project name cannot be blank'},
+                            minLength: {value: 5, errorMessage: 'Project name must be between 5 and 75 characters'},
+                            maxLength: {value: 75}
+                        }}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label>Description</Label>
+                    <AvField 
+                        id="description" 
+                        name="description"
+                        type="textarea"
+                        value={description}
+                        onBlur={handleBlur}
+                        onChange={e => setDescription(e.target.value)} 
+                        validate={{
+                            maxLength: {value: 500}
+                        }}
+                    />
+                </FormGroup>
+            </AvForm>
+            <CreateComment
+                type={COMMENT_PROJECT}
+                parentId={projectId}
+            />
+            <div className="comments-project-wrapper">
+                { comments.isLoading ? <p>Loading comments...</p> : comments.data.map(comment => {
+                    return <Comment comment={comment} />
+                })}
             </div>
-        )
-    }
-}
+        </div>
+    )
+};
+
 ProjectInfo.propTypes = {
     project: PropTypes.object,
     projectId: PropTypes.number.isRequired,
