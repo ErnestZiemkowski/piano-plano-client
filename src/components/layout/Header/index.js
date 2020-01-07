@@ -11,17 +11,16 @@ import { toggleNavigationSidebar } from '../../../actions/layout';
 import './styles.scss';
 
 
-const Header = ({ userName }) => {
+const Header = ({ userName, toggleNavigationSidebar }) => {
 
     const [date, setDate] = useState(new Date());
 
     const tick = () => {
-        this.setState({ date: new Date() });
         setDate(new Date());
     }
 
     useEffect(() => {
-        const timerID = setInterval(() => this.tick(), 1000);
+        const timerID = setInterval(() => tick(), 1000);
         return () => {
             clearInterval(timerID);
         };
@@ -34,14 +33,14 @@ const Header = ({ userName }) => {
         <div className="header">
             <span className="text-light">
                 <span 
-                    onClick={() => this.props.toggleNavigationSidebar()} 
+                    onClick={() => toggleNavigationSidebar()} 
                     className="badge badge-light" 
                     data-toggle="tooltip" 
                     data-placement="bottom" 
                     title="Create new project"
                 >
                     <FontAwesomeIcon icon={faBars} />
-                </span> {' '}
+                </span>&nbsp;
                 Hello, {userName}
             </span>
             <span className="text-light">
