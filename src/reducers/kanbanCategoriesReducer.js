@@ -77,6 +77,10 @@ export default (state = initialState, action) => {
                 data: data
             };
         case REARANGE_KANBAN_BOARD:
+            return {
+                ...state,
+                data: action.payload
+            };
         default:
             return state;
     }

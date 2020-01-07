@@ -29,7 +29,7 @@ const NewCategoryInput = ({ projectId, createKanbanCategory, kanbanCategoriesCou
         setCategoryName('');
     };
 
-    return (
+    return projectId === 0 ?  <p className="no-existing-project-info">Please, choose your project</p> : (
         <AvForm className="create-category-form">
             <AvField 
                 name="newCategoryName"

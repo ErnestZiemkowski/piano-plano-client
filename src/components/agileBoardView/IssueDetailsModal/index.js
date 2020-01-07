@@ -88,7 +88,7 @@ const IssueDetailsModal = props => {
     };
 
     const d = new Date(Date.parse(props.issueDetails ? props.issueDetails.createdAt : null));
-
+    
     return (
         <Modal
             isOpen={props.issueDetailsId !== -1}

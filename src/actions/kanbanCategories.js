@@ -94,7 +94,10 @@ export const rearangeKanbanBoard = kanbanCategoriesData => dispatch => {
     axios
         .post(api.kanbanCategories.rearangePosition, kanbanCategoriesData)
         .then(res => {
-            dispatch({ type: REARANGE_KANBAN_BOARD });
+            dispatch({ 
+                type: REARANGE_KANBAN_BOARD,
+                payload: kanbanCategoriesData
+            });
         })
         .catch(err => {
             dispatch({

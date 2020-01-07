@@ -20,7 +20,7 @@ import "./styles.scss";
 
 
 const AgileBoard = ({ getAllProjects, getKanbanCategoriesByProjectId, projectsNames, kanbanCategories }) => {
-    const [projectId, setProjectId] = useState(1);
+    const [projectId, setProjectId] = useState(0);
     const [isModalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const AgileBoard = ({ getAllProjects, getKanbanCategoriesByProjectId, projectsNa
 
     useEffect(() => {
         getKanbanCategoriesByProjectId(projectId);
-    }, projectId);
+    }, [projectId]);
 
 
     const handleProjectChange = e => setProjectId(parseInt(e.target.id));
