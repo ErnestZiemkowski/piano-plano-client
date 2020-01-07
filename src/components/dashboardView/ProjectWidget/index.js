@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
+import { Tooltip } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
@@ -16,6 +17,8 @@ import './styles.scss';
 const ProjectWidget = ({ deleteProject, progress, openProjectDetailSidebarById, createDateTime, name, id }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tooltipProjectIcon, setTooltipProjectIcon] = useState(false);
+    const [tooltipTrashIcon, setTooltipTrashIcon] = useState(false);
 
     const handleDelete = e => {
         e.preventDefault();
@@ -34,13 +37,31 @@ const ProjectWidget = ({ deleteProject, progress, openProjectDetailSidebarById, 
                     <h2 className="project-name">{ name }</h2>
                     <div className="project-actions">
                         <FontAwesomeIcon 
+                            id="project-info-icon"
                             icon={faInfoCircle}
                             onClick={() => openProjectDetailSidebarById(id)}
                         />
+                        <Tooltip 
+                            placement="bottom" 
+                            isOpen={tooltipProjectIcon} 
+                            target="project-info-icon" 
+                            toggle={() => setTooltipProjectIcon(!tooltipProjectIcon)}
+                        >
+                            Project Info
+                        </Tooltip>
                         <FontAwesomeIcon 
+                            id="trash-icon"
                             icon={faTrash}
                             onClick={() => setIsModalOpen(!isModalOpen)}
                         />
+                        <Tooltip 
+                            placement="bottom" 
+                            isOpen={tooltipTrashIcon} 
+                            target="trash-icon" 
+                            toggle={() => setTooltipTrashIcon(!tooltipTrashIcon)}
+                        >
+                            Remove Project
+                        </Tooltip>
                     </div>
                 </div>
                 <small className="project-start-date">

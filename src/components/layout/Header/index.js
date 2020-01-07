@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { Tooltip } from 'reactstrap';
 
 import { daysNames, monthNames } from '../../../utils/dateTime';
 import { toggleNavigationSidebar } from '../../../actions/layout';
@@ -14,6 +15,7 @@ import './styles.scss';
 const Header = ({ userName, toggleNavigationSidebar }) => {
 
     const [date, setDate] = useState(new Date());
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const tick = () => {
         setDate(new Date());
@@ -33,14 +35,21 @@ const Header = ({ userName, toggleNavigationSidebar }) => {
         <div className="header">
             <span className="text-light">
                 <span 
+                    id="bars"
                     onClick={() => toggleNavigationSidebar()} 
                     className="badge badge-light" 
-                    data-toggle="tooltip" 
-                    data-placement="bottom" 
-                    title="Create new project"
                 >
                     <FontAwesomeIcon icon={faBars} />
-                </span>&nbsp;
+                </span>
+                <Tooltip 
+                    placement="bottom" 
+                    isOpen={tooltipOpen} 
+                    target="bars" 
+                    toggle={() => setTooltipOpen(!tooltipOpen)} 
+                >
+                    Toggle sidebar
+                </Tooltip>
+                &nbsp;
                 Hello, {userName}
             </span>
             <span className="text-light">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { FormGroup, Label, Button } from 'reactstrap'
+import { FormGroup, Label, Button, Tooltip } from 'reactstrap'
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import CreateComment from '../../layout/CreateComment';
@@ -23,6 +23,7 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
     const [description, setDescription] = useState('');
     const [createDateTime, setCreateDateTime] = useState('')
     const [creatorUsername, setCreatorUsername] = useState('')
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     useEffect(() => {
         getCommentsByProjectId(projectId);
@@ -53,6 +54,7 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
     return (
         <div className="project-details-side-bar">
             <Button 
+                id="close-project-sidebar-icon"
                 className="close" 
                 type="button" 
                 aria-label="Close"
@@ -60,6 +62,14 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
             >
                 <span aria-hidden="true">&times;</span>
             </Button>
+            <Tooltip 
+                placement="left" 
+                isOpen={tooltipOpen} 
+                target="close-project-sidebar-icon" 
+                toggle={() => setTooltipOpen(!tooltipOpen)}
+            >
+                Close sidebar
+            </Tooltip>
             <h1 className="project-details-header">Project details</h1>
             <AvForm>
                 <FormGroup>

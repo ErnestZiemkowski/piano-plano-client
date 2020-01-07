@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { Tooltip } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
@@ -12,7 +13,9 @@ import "./styles.scss";
 
 
 const NewCategoryInput = ({ projectId, createKanbanCategory, kanbanCategoriesCount }) => {
+
     const [categoryName, setCategoryName] = useState('');
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const handleCreateCategory = e => {
         e.preventDefault(); 
@@ -39,14 +42,20 @@ const NewCategoryInput = ({ projectId, createKanbanCategory, kanbanCategoriesCou
                     maxLength: {value: 30}
                 }}
             />
-            <FontAwesomeIcon 
+            <FontAwesomeIcon
+                id="add-category-icon" 
                 icon={faPlus} 
                 onClick={handleCreateCategory} 
                 className="add-column"
-                data-toggle="tooltip" 
-                data-placement="bottom" 
-                title="Add category" 
             />
+            <Tooltip 
+                placement="top" 
+                isOpen={tooltipOpen} 
+                target="add-category-icon" 
+                toggle={() => setTooltipOpen(!tooltipOpen)}
+            >
+                Add category
+            </Tooltip>
         </AvForm>
     );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
+import { Tooltip } from 'reactstrap';
 import Loader from 'react-loaders';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,6 +25,7 @@ import "./styles.scss";
 const Dashboard = ({ getAllProjects, projects, projectIdSidebarDetails }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     useEffect(() => {
         getAllProjects();
@@ -36,9 +38,21 @@ const Dashboard = ({ getAllProjects, projects, projectIdSidebarDetails }) => {
                 <Header />
                 <BackgroundBoard>
                     <div className="projects-board-actions">
-                        <span onClick={() => setIsModalOpen(!isModalOpen)} className="badge badge-dark" data-toggle="tooltip" data-placement="bottom" title="Create new project">
+                        <span
+                            id="create-project" 
+                            onClick={() => setIsModalOpen(!isModalOpen)} 
+                            className="badge badge-dark" 
+                        >
                             <FontAwesomeIcon icon={faPlus} />
                         </span>
+                        <Tooltip 
+                            placement="right" 
+                            isOpen={tooltipOpen} 
+                            target="create-project" 
+                            toggle={() => setTooltipOpen(!tooltipOpen)}
+                        >
+                            Create new project
+                        </Tooltip>
                     </div>
                     <div className="widgets-wrapper">
                         { projects.isLoading ?
