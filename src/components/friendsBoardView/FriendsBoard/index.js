@@ -1,28 +1,42 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import PropTypes from "prop-types";
 
+import Friends from '../Friends';
+import Invitations from '../Invitations';
 import Header from "../../layout/Header";
 import NavigationBar from "../../layout/NavigationBar";
 import ContentWrapper from "../../layout/ContentWrapper";
 import ImageBackground from "../../layout/ImageBackground";
 import BackgroundBoard from "../../layout/BackgroundBoard";
 import CreateInvitation from "../../friendsBoardView/CreateInvitation";
-import Friends from '../Friends';
-import Invitations from '../Invitations';
 
-import { getInvitations } from '../../../actions/invitations';
 import { getFriends } from '../../../actions/friends';
+import { getInvitations } from '../../../actions/invitations';
+import { createToast } from '../../../actions/toasts';
 
 import "./styles.scss";
 
 
-const FriendsBoard = ({ getFriends, getInvitations }) => {
+const FriendsBoard = ({ createToast, getFriends, getInvitations }) => {
+
+    const errors = useSelector(store => store.errors);
 
     useEffect(() => {
-        getFriends();
+        getFriends()
         getInvitations();
     }, []);
+
+    useEffect(() => {
+        if (errors.message) {
+            const toast = {
+                header: `Error - ${errors.status}`,
+                body: errors.message,
+                type: 'danger' 
+            };
+            createToast(toast);    
+        }
+    }, [errors.message]);
 
     return (
         <ImageBackground>
@@ -43,6 +57,13 @@ const FriendsBoard = ({ getFriends, getInvitations }) => {
 FriendsBoard.propTypes = {
     getFriends: PropTypes.func.isRequired,
     getInvitations: PropTypes.func.isRequired,
+    errors: PropTypes.shape({
+        timestamp: PropTypes.string,
+        status: PropTypes.number,
+        error: PropTypes.string,
+        message: PropTypes.string,
+        path: PropTypes.string,
+    }),
 };
 
-export default connect(null, { getFriends, getInvitations })(FriendsBoard)
+export default connect(null, { createToast, getFriends, getInvitations })(FriendsBoard);

@@ -66,8 +66,9 @@ const ThemeChange = ({ currentBackgroundTheme, updateSettings }) => {
             >
                 <ModalHeader>Change themes</ModalHeader>
                 <ModalBody>
-                    {changeThemeOptions.map(theme => (
+                    {changeThemeOptions.map((theme, index) => (
                         <CardImg
+                            key={index}
                             top
                             name={theme}
                             width="100%"

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Loader from 'react-loaders';
 import { Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -19,14 +18,14 @@ const Friends = ({ friends, removeFriend }) => {
             <Table>
                 <thead>
                     <tr>
-                    <th>#</th>
-                    <th>Username</th>
-                    <th className="cell-center">Actions</th>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th className="cell-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    { friends.isLoading ? <Loader type="ball-scale-multiple" className="loader-center" /> : friends.data.map((friend, index) => {
-                        return <tr key={friend.id}>
+                    { friends.isLoading ? '' : friends.data.map((friend, index) => (
+                        <tr key={friend.id}>
                             <th scope="row">{ index + 1 }</th>
                             <td>{ friend.username }</td>
                             <td className="cell-actions">
@@ -35,8 +34,8 @@ const Friends = ({ friends, removeFriend }) => {
                                     onClick={() => removeFriend(friend.id)}
                                 />
                             </td>
-                        </tr>;
-                    }) }
+                        </tr> 
+                    )) }
                 </tbody>
             </Table>
         </div>

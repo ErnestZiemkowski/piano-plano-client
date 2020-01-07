@@ -38,24 +38,22 @@ if(localStorage.jwtToken) {
 
 }
 
-class App extends Component {  
-  render() {
-    return (
-        <Provider store={store}>
-          <Router>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Switch>
-              <PrivateRoute exact path="/" component={Dashboard} />
-              <PrivateRoute exact path="/friends" component={FriendsBoard} />
-              <PrivateRoute exact path="/settings" component={Settings} />
-              <PrivateRoute exact path="/agile-board" component={AgileBoard} />
-              <PrivateRoute exact path="/daily-goals" component={DailyGoalsBoard} />
-            </Switch>
-          </Router>
-        </Provider>
-    );
-  }
+const App = () => {
+  return (
+      <Provider store={store}>
+        <Router>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Switch>
+            <PrivateRoute exact path="/" component={Dashboard} />
+            <PrivateRoute exact path="/friends" component={FriendsBoard} />
+            <PrivateRoute exact path="/settings" component={Settings} />
+            <PrivateRoute exact path="/agile-board" component={AgileBoard} />
+            <PrivateRoute exact path="/daily-goals" component={DailyGoalsBoard} />
+          </Switch>
+        </Router>
+      </Provider>
+  );
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'));

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -15,20 +15,11 @@ import { COMMENT_PROJECT } from '../../../actions/types';
 
 import "./styles.scss";
 
-class CreateComment extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            content: ''
-        };
-    }
+const CreateComment = ({ createComment, parentId, type }) => {
 
-    handleChange = e => this.setState({ [e.target.name] : e.target.value });
+    const [content, setContent] = useState('');
 
-    handleSubmit = () => {
-        const { content } = this.state;
-        const { createComment, parentId, type } = this.props;
-
+    const handleSubmit = () => {
         const commentData = {
             content: content,
             type: type,
@@ -36,48 +27,44 @@ class CreateComment extends Component {
         }
 
         createComment(commentData);
-        this.setState({ content: '' });
+        setContent('');
     }
 
-    render() {
-        const { content } = this.state;
-        const { type } = this.props;
-
-        return (
-            <Fragment>
-                <AvForm>
-                    <FormGroup className={type === COMMENT_PROJECT ? 'comment-project-form' : 'comment-issue-form'}>
-                        <Label>Comments</Label>
-                        <AvField
-                            id="comment" 
-                            name="content"
-                            type="textarea"
-                            className={type === COMMENT_PROJECT ? 'comment-project-input' : 'comment-issue-input'}
-                            value={content}
-                            onChange={this.handleChange}
-                            validate={{
-                                maxLength: {value: 500}
-                            }}    
-                        />
-                    </FormGroup>
-                    <FormGroup className="comment-button-form">
-                        <Button 
-                            color="primary"
-                            className="btn-sm"
-                            onClick={this.handleSubmit}
-                        >
-                            Comment
-                        </Button>
-                    </FormGroup>
-                </AvForm>
-            </Fragment>
-            )
-    }
+    return (
+        <Fragment>
+            <AvForm>
+                <FormGroup className={type === COMMENT_PROJECT ? 'comment-project-form' : 'comment-issue-form'}>
+                    <Label>Comments</Label>
+                    <AvField
+                        id="comment" 
+                        name="content"
+                        type="textarea"
+                        className={type === COMMENT_PROJECT ? 'comment-project-input' : 'comment-issue-input'}
+                        value={content}
+                        onChange={e => setContent(e.target.value)}
+                        validate={{
+                            maxLength: {value: 500}
+                        }}    
+                    />
+                </FormGroup>
+                <FormGroup className="comment-button-form">
+                    <Button 
+                        color="primary"
+                        className="btn-sm"
+                        onClick={handleSubmit}
+                    >
+                        Comment
+                    </Button>
+                </FormGroup>
+            </AvForm>
+        </Fragment>
+    )
 }
+
 CreateComment.propTypes = {
     parentId: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
-    fetchComments: PropTypes.func.isRequired,
+    createComment: PropTypes.func.isRequired,
 };
 
 export default connect(null, { createComment })(CreateComment)

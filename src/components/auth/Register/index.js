@@ -70,9 +70,7 @@ const Register = ({ auth, history, register, errorsData }) => {
                             placeholder="Enter email" 
                             value={email} 
                             onChange={e => setEmail(e.target.value)}
-                            validate={{
-                                emai1: true
-                            }}
+                            required
                         />
                     </FormGroup>
                     <FormGroup>

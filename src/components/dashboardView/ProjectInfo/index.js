@@ -17,7 +17,7 @@ import { monthNames } from '../../../utils/dateTime';
 import './styles.scss';
 
 
-const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject, comments }) => {
+const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject, comments, closeProjectDetailSidebar }) => {
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -56,7 +56,7 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
                 className="close" 
                 type="button" 
                 aria-label="Close"
-                onClick={() => this.props.closeProjectDetailSidebar()} 
+                onClick={() => closeProjectDetailSidebar()} 
             >
                 <span aria-hidden="true">&times;</span>
             </Button>
@@ -105,7 +105,7 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
             />
             <div className="comments-project-wrapper">
                 { comments.isLoading ? <p>Loading comments...</p> : comments.data.map(comment => {
-                    return <Comment comment={comment} />
+                    return <Comment key={comment.id} comment={comment} />
                 })}
             </div>
         </div>

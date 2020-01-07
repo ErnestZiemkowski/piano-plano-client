@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import PropTypes from "prop-types";
 
 import "./styles.scss";
 
 
-export default class BackgroundBoard extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const { className } = this.props;
-
-        return (
-            <div className={`background-board ${className}`}>
-                {this.props.children}
-            </div>
-        );
-    }
+const BackgroundBoard = ({ children, className }) => {
+    return (
+        <div className={`background-board ${className}`}>
+            {children}
+        </div>
+    );
 }
+
+BackgroundBoard.propTypes = {
+    className: PropTypes.string,
+}
+
+export default BackgroundBoard;

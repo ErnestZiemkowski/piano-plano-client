@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Table } from 'reactstrap';
-import Loader from 'react-loaders';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,7 +24,7 @@ const Invitations = ({ invitations, acceptInvitation, removeInvitation }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    { invitations.isLoading ? <Loader type="ball-scale-multiple" className="loader-center" /> : invitations.data.map((invitation, index) => {
+                    { invitations.isLoading ? '' : invitations.data.map((invitation, index) => {
                         return <tr key={ invitation.id }>
                             <th scope="row">{ index + 1 }</th>
                             <td>{ invitation.receiverEmail }</td>

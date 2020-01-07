@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Loader from 'react-loaders';
 import { 
@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
-import CreateComment from '../../layout/CreateComment'
+import CreateComment from '../../layout/CreateComment';
 import Comment from '../../layout/Comment';
 
 import { monthNames } from '../../../utils/dateTime';
@@ -84,7 +84,7 @@ const IssueDetailsModal = props => {
         };
 
         props.toggleDailyGoal(dailyGoal);
-        props.setDailyGoal(null);
+        setDailyGoal(!isDailyGoal);
     };
 
     const d = new Date(Date.parse(props.issueDetails ? props.issueDetails.createdAt : null));
@@ -119,9 +119,9 @@ const IssueDetailsModal = props => {
                                 { props.issueDetails.kanbanCategoryTitle }
                             </Button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                { props.kanbanCategories.map((category, index) => 
+                                { props.kanbanCategories.map(category => 
                                     (<Button 
-                                        key={index} 
+                                        key={category.id} 
                                         id={category.id}
                                         value={category.id} 
                                         onClick={handleStatusChange} 
@@ -174,7 +174,7 @@ const IssueDetailsModal = props => {
                 />
                 <div className="comments-wrapper">
                     { props.comments.isLoading ? <p>Loading comments...</p> : props.comments.data.map(comment => {
-                        return <Comment comment={comment} />
+                        return <Comment key={comment.id} comment={comment} />
                     })}
                 </div>
             </ModalBody>

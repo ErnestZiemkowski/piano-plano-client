@@ -31,6 +31,8 @@ const CreateProjectModal = ({ createProject, isModalOpen, toggleModal }) => {
         
         createProject(projectData);
         toggleModal();
+        setName('');
+        setDescription('');
     }
 
 
