@@ -9,7 +9,7 @@ import { deleteToast } from '../../../actions/toasts';
 import "./styles.scss";
 
 
-export const ToastsWrapper = props => {
+const ToastsWrapper = props => {
     return (
         <div className="toasts-wrapper">
             { props.toasts.map((toast, index) => (

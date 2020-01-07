@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,51 +8,42 @@ import { faBriefcase, faTable, faMedal, faUserAlt, faCog, faPowerOff } from '@fo
 
 import './styles.scss';
 
-class NavigationBar extends Component {
-
-    handleLogout = () => {
-        this.props.logout();
-    }
-
-    render() {
-        const { isNavigationSidebarOpen } = this.props;
-        
-        return (
-            <div className={`navigation-bar-wrapper ${isNavigationSidebarOpen ? '' : 'd-none'}`}>
-                <NavigationItem 
-                    redirectTo="/" 
-                    icon={faBriefcase} 
-                    itemTopic="Dashboard" 
-                />
-                <NavigationItem 
-                    redirectTo="/agile-board" 
-                    icon={faTable} 
-                    itemTopic="Agile Board" 
-                />
-                <NavigationItem 
-                    redirectTo="/daily-goals" 
-                    icon={faMedal} 
-                    itemTopic="Daily Goals" 
-                />
-                <NavigationItem 
-                    redirectTo="/friends" 
-                    icon={faUserAlt} 
-                    itemTopic="Friends" 
-                />
-                <NavigationItem 
-                    redirectTo="/settings" 
-                    icon={faCog} 
-                    itemTopic="Settings" 
-                />
-                <NavigationItem 
-                    redirectTo="/login" 
-                    icon={faPowerOff} 
-                    itemTopic="Logout" 
-                    onClick={this.handleLogout} 
-                />
-            </div>
-        )    
-    }
+const NavigationBar = ({ isNavigationSidebarOpen, logout }) => {
+    return (
+        <div className={`navigation-bar-wrapper ${isNavigationSidebarOpen ? '' : 'd-none'}`}>
+            <NavigationItem 
+                redirectTo="/" 
+                icon={faBriefcase} 
+                itemTopic="Dashboard" 
+            />
+            <NavigationItem 
+                redirectTo="/agile-board" 
+                icon={faTable} 
+                itemTopic="Agile Board" 
+            />
+            <NavigationItem 
+                redirectTo="/daily-goals" 
+                icon={faMedal} 
+                itemTopic="Daily Goals" 
+            />
+            <NavigationItem 
+                redirectTo="/friends" 
+                icon={faUserAlt} 
+                itemTopic="Friends" 
+            />
+            <NavigationItem 
+                redirectTo="/settings" 
+                icon={faCog} 
+                itemTopic="Settings" 
+            />
+            <NavigationItem 
+                redirectTo="/login" 
+                icon={faPowerOff} 
+                itemTopic="Logout" 
+                onClick={() => logout()} 
+            />
+        </div>
+    )    
 }
 
 NavigationBar.propTypes = {

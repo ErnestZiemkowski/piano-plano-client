@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -10,56 +10,49 @@ import { toggleNavigationSidebar } from '../../../actions/layout';
 
 import './styles.scss';
 
-class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            date: new Date()
-        };
-    }
 
-    tick() {
+const Header = ({ userName }) => {
+
+    const [date, setDate] = useState(new Date());
+
+    const tick = () => {
         this.setState({ date: new Date() });
+        setDate(new Date());
     }
 
-    componentDidMount() {
-        this.timerID = setInterval(() => this.tick(), 1000);
-    }
-    
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-    
-    render() {
-        const { userName } = this.props;
-        const { date } = this.state;
-        let time = date.toLocaleTimeString();
-        time = time.substring(0, 5)
+    useEffect(() => {
+        const timerID = setInterval(() => this.tick(), 1000);
+        return () => {
+            clearInterval(timerID);
+        };
+    }, []);
 
-        return (
-            <div className="header">
-                <span className="text-light">
-                    <span 
-                        onClick={() => this.props.toggleNavigationSidebar()} 
-                        className="badge badge-light" 
-                        data-toggle="tooltip" 
-                        data-placement="bottom" 
-                        title="Create new project"
-                    >
-                        <FontAwesomeIcon icon={faBars} />
-                    </span> {' '}
-                    Hello, {userName}
-                </span>
-                <span className="text-light">
-                    { time }
-                </span>                
-                <span className="text-light">
-                    {daysNames[date.getDay()]}, {date.getDate()} {monthNames[date.getMonth()]} {date.getFullYear()}
-                </span>
-            </div>
-        );
-    }    
-}
+    let time = date.toLocaleTimeString();
+    time = time.substring(0, 5)
+
+    return (
+        <div className="header">
+            <span className="text-light">
+                <span 
+                    onClick={() => this.props.toggleNavigationSidebar()} 
+                    className="badge badge-light" 
+                    data-toggle="tooltip" 
+                    data-placement="bottom" 
+                    title="Create new project"
+                >
+                    <FontAwesomeIcon icon={faBars} />
+                </span> {' '}
+                Hello, {userName}
+            </span>
+            <span className="text-light">
+                { time }
+            </span>                
+            <span className="text-light">
+                {daysNames[date.getDay()]}, {date.getDate()} {monthNames[date.getMonth()]} {date.getFullYear()}
+            </span>
+        </div>
+    );
+}    
 
 Header.propTypes = {
     userName: PropTypes.string.isRequired, 

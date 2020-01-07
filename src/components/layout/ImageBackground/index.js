@@ -1,32 +1,27 @@
-import React, { Component, Fragment } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
-import "./styles.scss";
-
 import { getSettings } from '../../../actions/settings'
 
-class ImageBackground extends Component {
-    constructor(props) {
-        super(props);
-    }
+import "./styles.scss";
 
-    componentDidMount() {
-        this.props.getSettings();
-    }
+
+const ImageBackground = ({ className, children, backgroundImage, getSettings }) => {
+
+    useEffect(() => {
+        getSettings();
+    }, []);
     
-    render() {
-        const { className, backgroundImage } = this.props;
-
-        return (
-            <div 
-                className={`image-background ${backgroundImage} ${className}`} 
-            >
-                {this.props.children}
-            </div>
-        )
-    }
+    return (
+        <div 
+            className={`image-background ${backgroundImage} ${className}`} 
+        >
+            {children}
+        </div>
+    )
 }
+
 ImageBackground.propTypes = {
     backgroundImage: PropTypes.string.isRequired,
 };
