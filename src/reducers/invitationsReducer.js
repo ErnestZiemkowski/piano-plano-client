@@ -24,17 +24,13 @@ export default (state = initialState, action) => {
                 isLoading: false,
                 data: action.payload
             };
-        case CREATE_INVITATION:
-            return {
-                ...state,
-                data: [...state.data, action.payload]
-            };
         case REMOVE_INVITATION:
         case ACCEPT_INVITATION:
             return {
                 ...state,
                 data: state.data.filter(invitation => invitation.id !== action.payload)
             };
+        case CREATE_INVITATION:
         default:
             return state;
         

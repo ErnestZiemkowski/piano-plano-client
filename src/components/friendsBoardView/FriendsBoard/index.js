@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 
 import Friends from '../Friends';
@@ -21,12 +21,17 @@ import "./styles.scss";
 const FriendsBoard = ({ createToast, getFriends, getInvitations }) => {
 
     const errors = useSelector(store => store.errors);
+    const invitations = useSelector(store => store.invitations);
 
     useEffect(() => {
         getFriends()
         getInvitations();
     }, []);
 
+    useEffect(() => {
+        getFriends()
+    }, [invitations.data]);
+    
     useEffect(() => {
         if (errors.message) {
             const toast = {

@@ -20,7 +20,6 @@ export default (state = initialState, action) => {
                 body: action.payload.body,
                 type: action.payload.type
             };
-            console.log('huj');
             return {
                 ...state,
                 data: [...state.data, toast]

@@ -23,7 +23,7 @@ const Invitations = ({ invitations, acceptInvitation, removeInvitation }) => {
                 <thead>
                     <tr>
                     <th>#</th>
-                    <th>Email</th>
+                    <th>Username</th>
                     <th className="cell-center">Actions</th>
                     </tr>
                 </thead>
@@ -31,7 +31,7 @@ const Invitations = ({ invitations, acceptInvitation, removeInvitation }) => {
                     { invitations.isLoading ? '' : invitations.data.map((invitation, index) => {
                         return <tr key={ invitation.id }>
                             <th scope="row">{ index + 1 }</th>
-                            <td>{ invitation.receiverEmail }</td>
+                            <td>{ invitation.creator.username }</td>
                             <td className="cell-actions">
                                 <FontAwesomeIcon 
                                     id="icon-accept-invitation"
