@@ -107,7 +107,6 @@ AgileBoard.propTypes = {
                                     name: PropTypes.string.isRequired,
                                 }),
                             ).isRequired,
-                            friends: PropTypes.array.isRequired,
                         }),
                     }),
                 ),

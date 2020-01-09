@@ -104,6 +104,43 @@ const IssueDetailsModal = props => {
                             <Label>Creator: { props.issueDetails.creator.username }</Label>
                         </FormGroup>
                         <FormGroup>
+                            <Label>Assignee: &nbsp;&nbsp;</Label>
+                            <Button 
+                                id="dropdownMenuTaskAssignee" 
+                                className="btn btn-sm btn-primary dropdown-toggle action-btn" 
+                                data-toggle="dropdown" 
+                                type="button" 
+                                aria-haspopup="true" 
+                                aria-expanded="false"
+                            >
+                                { props.issueDetails.assignee ? props.issueDetails.assignee.username : 'Unassigned' }
+                            </Button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuTaskAssignee">
+                                { props.issueDetails.projectMembers.map(member => 
+                                    (<Button 
+                                        key={member.id} 
+                                        id={member.id}
+                                        name="assignee"
+                                        value={member.username} 
+                                        onClick={handleBlur} 
+                                        className="dropdown-item" 
+                                        type="button"
+                                    >
+                                        { member.username }&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </Button>))}
+                                    <Button 
+                                        name="assignee"
+                                        value="unassigned" 
+                                        onClick={handleBlur} 
+                                        className="dropdown-item"  
+                                        type="button"
+                                    >
+                                        Unassigned
+                                    </Button>
+                            </div>
+                        </FormGroup>
+
+                        <FormGroup>
                             <Label>Created at: { d.getDate() } { monthNames[d.getMonth()] } { d.getFullYear() } { d.getHours() }:{ d.getMinutes() }</Label>
                         </FormGroup>
                         <FormGroup>

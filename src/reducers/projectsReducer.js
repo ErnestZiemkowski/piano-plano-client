@@ -3,7 +3,8 @@ import {
     PROJECTS_LOADING, 
     DELETE_PROJECT, 
     CREATE_PROJECT, 
-    UPDATE_PROJECT 
+    UPDATE_PROJECT,
+    TOGGLE_FRIEND_AS_A_PROJECT_MEMBER
 } from '../actions/types';
 
 const initialState = {
@@ -34,6 +35,7 @@ export default (state = initialState, action) => {
                 ...state,
                 data: state.data.filter(project => project.id !== action.payload)
             };
+        case TOGGLE_FRIEND_AS_A_PROJECT_MEMBER:
         case UPDATE_PROJECT:
             const index = state.data.findIndex(project => project.id === action.payload.id);
             state.data[index] = action.payload;

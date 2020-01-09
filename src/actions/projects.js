@@ -8,7 +8,8 @@ import {
     PROJECTS_LOADING,
     DELETE_PROJECT,
     CREATE_PROJECT,
-    UPDATE_PROJECT
+    UPDATE_PROJECT,
+    TOGGLE_FRIEND_AS_A_PROJECT_MEMBER
 } from './types';
 
 export const getAllProjects = () => dispatch => {
@@ -73,6 +74,24 @@ export const updateProject = (projectData, id) => dispatch => {
         .then(res => {
             dispatch({
                 type: UPDATE_PROJECT,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+};
+
+export const toggleFriendAsMember = (projectData, id) => dispatch => {
+    setAuthToken(localStorage.getItem("jwtToken"));
+    axios
+        .put(api.projects.toggleFriendAsMemberByProjectId(id), projectData)
+        .then(res => {
+            dispatch({
+                type: TOGGLE_FRIEND_AS_A_PROJECT_MEMBER,
                 payload: res.data
             });
         })

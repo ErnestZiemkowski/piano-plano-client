@@ -13,7 +13,8 @@ module.exports = {
         updateById: id => (backendURI + "/api/projects/" + id),
         kanbanCategories: {
             getByProjectId: id => (backendURI + `/api/projects/${id}/kanban-categories`),
-        }
+        },
+        toggleFriendAsMemberByProjectId: id => (backendURI + `/api/projects/${id}/members`)
     },
     kanbanCategories: {
         create: backendURI + "/api/kanban-category",

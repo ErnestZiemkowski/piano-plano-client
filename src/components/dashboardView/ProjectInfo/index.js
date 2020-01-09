@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { FormGroup, Label, Button, Tooltip } from 'reactstrap'
 import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import CreateComment from '../../layout/CreateComment';
 import Comment from '../../layout/Comment';
@@ -11,13 +13,24 @@ import Comment from '../../layout/Comment';
 import { COMMENT_PROJECT } from '../../../actions/types';
 import { getCommentsByProjectId } from '../../../actions/comments';
 import { closeProjectDetailSidebar } from '../../../actions/layout';
-import { updateProject } from '../../../actions/projects';
+import { updateProject, toggleFriendAsMember } from '../../../actions/projects';
 import { monthNames } from '../../../utils/dateTime';
+import { getFriends } from '../../../actions/friends';
 
 import './styles.scss';
 
 
-const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject, comments, closeProjectDetailSidebar }) => {
+const ProjectInfo = ({ 
+    getCommentsByProjectId, 
+    getFriends, 
+    updateProject, 
+    toggleFriendAsMember,
+    project, 
+    projectId, 
+    comments, 
+    closeProjectDetailSidebar, 
+    friends
+}) => {
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -26,6 +39,7 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
     useEffect(() => {
+        getFriends();
         getCommentsByProjectId(projectId);
     }, []);
 
@@ -48,6 +62,19 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
 
         updateProject(projectData, projectId);
     }    
+
+    const handleAddFriendToProject = e => {
+        const projectData = {
+            friendToAddId: parseInt(e.target.id)
+        };
+
+        toggleFriendAsMember(projectData, projectId);
+    };
+
+    const checkIfFriendIsAlsoAMember = (members, friendId) => {
+        const index = members.findIndex(member => member.id === friendId);
+        return index === -1 ? false : true;
+    }
 
     const d = new Date(Date.parse(createDateTime));
 
@@ -74,6 +101,33 @@ const ProjectInfo = ({ getCommentsByProjectId, project, projectId, updateProject
             <AvForm>
                 <FormGroup>
                     <Label>Creator: { creatorUsername }</Label>
+                </FormGroup>
+                <FormGroup>
+                    <Label>Members: &nbsp;&nbsp;</Label>
+                    <Button 
+                        id="dropdownMenuAssignee" 
+                        className="btn btn-sm btn-primary dropdown-toggle action-btn" 
+                        data-toggle="dropdown" 
+                        type="button" 
+                        aria-haspopup="true" 
+                        aria-expanded="false"
+                    >
+                        Friends
+                    </Button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuAssignee">
+                        { friends.data.map(friend => 
+                            (<Button 
+                                key={friend.id} 
+                                id={friend.id}
+                                value={friend.id} 
+                                onClick={handleAddFriendToProject} 
+                                className="dropdown-item" 
+                                type="button"
+                            >
+                                { friend.username }&nbsp;&nbsp;&nbsp;&nbsp;
+                                {checkIfFriendIsAlsoAMember(project.members, friend.id) ? <FontAwesomeIcon icon={faCheck} /> : ''}
+                            </Button>))}
+                    </div>
                 </FormGroup>
                 <FormGroup>
                     <Label>Created at: { d.getDate() } { monthNames[d.getMonth()] } { d.getFullYear() } { d.getHours() }:{ d.getMinutes() }</Label>
@@ -132,10 +186,13 @@ ProjectInfo.propTypes = {
 const mapStateToProps = (state, props) => ({
     project: state.projects.data.find(project => project.id === props.projectId),
     comments: state.comments,
+    friends: state.friends,
 });
 
 export default connect(mapStateToProps, { 
+    getFriends,
     updateProject, 
     closeProjectDetailSidebar, 
-    getCommentsByProjectId
+    getCommentsByProjectId,
+    toggleFriendAsMember
  })(ProjectInfo);
