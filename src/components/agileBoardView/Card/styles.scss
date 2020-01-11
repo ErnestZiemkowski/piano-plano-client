@@ -22,9 +22,12 @@
         .card-actions:hover {
             cursor: pointer;
         }
+
+        .line-through {
+            text-decoration: line-through;
+        }
     }
     .card-content {
         padding: 0.5em 1em;
-
     }
 }

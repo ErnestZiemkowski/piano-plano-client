@@ -55,14 +55,6 @@ const IssueDetailsModal = props => {
         props.updateCard(issueData, props.issueDetailsId);
     };
 
-    // const toggleIssueAsDone = () => {
-    //     const issueData = {
-    //         done: !issueDetails.done
-    //     };
-
-    //     props.updateCard(issueData, props.issueDetailsId);
-    // };
-
     const handleStatusChange = e => {
         e.preventDefault();
         const issueData = {
@@ -88,7 +80,7 @@ const IssueDetailsModal = props => {
     };
 
     const d = new Date(Date.parse(props.issueDetails ? props.issueDetails.createdAt : null));
-    
+
     return (
         <Modal
             isOpen={props.issueDetailsId !== -1}
