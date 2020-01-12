@@ -41,7 +41,7 @@ if(localStorage.jwtToken) {
 const App = () => {
   return (
       <Provider store={store}>
-        <Router>
+        <Router basename="piano-plano-client">
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Switch>
