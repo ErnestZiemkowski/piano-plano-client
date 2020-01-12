@@ -1,4 +1,4 @@
-const backendURI = 'https://piano-plano.herokuapp.com/';
+const backendURI = 'https://piano-plano.herokuapp.com';
 
 module.exports = {
     auth: {
