@@ -1,4 +1,4 @@
-const backendURI = 'http://localhost:5000';
+const backendURI = 'https://piano-plano.herokuapp.com/';
 
 module.exports = {
     auth: {
