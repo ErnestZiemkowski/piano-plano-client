@@ -1,6 +1,6 @@
 import backendURI from '../config';
 
-module.exports = {
+const apiUrls = {
     auth: {
         register: backendURI + "/api/auth/signup",
         login: backendURI + "/api/auth/signin",
@@ -51,3 +51,5 @@ module.exports = {
         removeById: id => (backendURI + `/api/invitations/remove/${id}`)
     }
 }
+
+export default apiUrls;
