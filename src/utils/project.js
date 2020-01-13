@@ -4,5 +4,5 @@ export const countProgress = project => {
     const cardsPerProjectLength = cardsPerProject.length;
     const cardsDoneLength = cardsPerProject.filter(card => card.done == true).length;
 
-    return parseFloat(cardsDoneLength * 100 / cardsPerProjectLength);
+    return parseInt(cardsDoneLength * 100 / cardsPerProjectLength);
 }

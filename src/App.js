@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   HashRouter as Router,
@@ -41,7 +41,7 @@ if(localStorage.jwtToken) {
 const App = () => {
   return (
       <Provider store={store}>
-        <Router basename="piano-plano-client">
+        <Router>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Switch>

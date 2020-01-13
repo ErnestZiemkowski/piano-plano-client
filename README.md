@@ -1,34 +1,31 @@
-# minimal-react-webpack-babel-setup
+# General
 
-[![Build Status](https://travis-ci.org/rwieruch/minimal-react-webpack-babel-setup.svg?branch=master)](https://travis-ci.org/rwieruch/minimal-react-webpack-babel-setup) [![Slack](https://slack-the-road-to-learn-react.wieruch.com/badge.svg)](https://slack-the-road-to-learn-react.wieruch.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/rwieruch/minimal-react-webpack-babel-setup.svg)](https://greenkeeper.io/)
-
-Read how to set it up yourself: [React with Webpack Tutorial](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/).
-
-[![Edit minimal-react-webpack-babel-setup](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/rwieruch/minimal-react-webpack-babel-setup/tree/master/?fontsize=14)
-
-## Features
-
-* React 16
-* Webpack 4
-* Babel 7
-* Hot Module Replacement
-
-## DIY Add-Ons
-
-* [ESLint](https://www.robinwieruch.de/react-eslint-webpack-babel/)
-* [CSS Modules](https://www.robinwieruch.de/react-css-modules/)
-* [SVG Icons](https://www.robinwieruch.de/react-svg-icon-components/)
-* [Fonts Support](https://www.robinwieruch.de/webpack-font/)
-* [Images Support](https://www.robinwieruch.de/webpack-images/)
-
-## Alternatives
-
-* [Advanced React Webpack Babel Setup](https://github.com/rwieruch/advanced-react-webpack-babel-setup) via this [Tutorial](https://www.robinwieruch.de/webpack-advanced-setup-tutorial)
+## Links
+* [Working demo](https://piano-plano-client.firebaseapp.com/#/)
+* [Backend Repo](https://github.com/ErnestZiemkowski/piano-plano)
 
 ## Installation
+Make sure you have already set up [backend repo](https://github.com/ErnestZiemkowski/piano-plano) and it is running. If so, go ahead and follow these instructions:
 
-* `git clone git@github.com:rwieruch/minimal-react-webpack-babel-setup.git`
-* cd minimal-react-webpack-babel-setup
-* npm install
-* npm start
-* visit `http://localhost:8080/`
+* `git clone git@github.com:ErnestZiemkowski/piano-plano-client.git`
+* `cd piano-plano-client`
+* `npm install`
+* Go to `./config.js` and set your backendURI
+* `npm start`
+
+# Features
+* Create Projects and divide its work into atomic issues
+* Manage those issues via transparent Kanban Board
+* Start discussion over a project or issue
+* Assign issues to particular project members
+* Set issues as your daily goals
+* Invite friends and participate together in your projects 
+
+# Real user experience screenshots
+
+![dash-board](./screenshots/dash-board.png)
+![agile-board](./screenshots/agile-board.png)
+![issue-details](./screenshots/issue-details.png)
+![friends](./screenshots/friends.png)
+![settings](./screenshots/settings.png)
+![daily-goals](./screenshots/daily-goals.png)
