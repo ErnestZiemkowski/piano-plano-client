@@ -3,3 +3,4 @@ dist/bundle.js
 .firebase/
 .firebaserc
 firebase.json
+env-config.js

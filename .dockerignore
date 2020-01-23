@@ -1,0 +1,7 @@
+.firebase/
+.github/
+dist/bundle.js
+node_modules
+.gitignore
+.firebaserc
+firebase.json

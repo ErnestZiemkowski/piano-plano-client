@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js --mode production",
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
-    "test": "echo \"No test specified\" && exit 0"
+    "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./dist/ && webpack-dev-server --config ./webpack.config.js --mode development"
   },
   "keywords": [],
   "author": "",

@@ -1,4 +1,4 @@
-import backendURI from '../config';
+const backendURI = window._env_.API_URL
 
 const apiUrls = {
     auth: {
