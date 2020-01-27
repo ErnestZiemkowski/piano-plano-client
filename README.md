@@ -1,16 +1,25 @@
 # General
 
 ## Links
-* [Working demo](https://piano-plano-client.firebaseapp.com/#/)
+* [Working demo]()
 * [Backend Repo](https://github.com/ErnestZiemkowski/piano-plano)
 
-## Installation
+# Installation
+
+## Using Docker (recommended)
+If you want to run whole infrastructure just type:
+* `docker-compose up`
+
+If you want to spin just this container:
+* `docker run -d --name=piano-plano-client -p 6000:6000 -e API_URL=http://localhost:5000 ernestziemkowski/piano-plano-client` 
+
+## Oldshool way
 Make sure you have already set up [backend repo](https://github.com/ErnestZiemkowski/piano-plano) and it is running. If so, go ahead and follow these instructions:
 
 * `git clone git@github.com:ErnestZiemkowski/piano-plano-client.git`
 * `cd piano-plano-client`
 * `npm install`
-* Go to `./config.js` and set your backendURI
+* Go to `.env` and set your backendURI
 * `npm start`
 
 # Features
