@@ -1,10 +1,9 @@
-language: node_js
+language: bash
 
-node_js:
-  - stable
+sudo: required
 
-install:
-  - npm install
+services:
+- docker
 
 script:
-  - npm test
+- echo "Hello world"
