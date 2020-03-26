@@ -6,4 +6,5 @@ services:
 - docker
 
 script:
-- echo "Hello world" 
+- if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+  make deploy; else echo ">>> Could not perform deploy"; fi   
