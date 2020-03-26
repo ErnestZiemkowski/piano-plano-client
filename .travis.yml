@@ -6,4 +6,4 @@ services:
 - docker
 
 script:
-- echo "Hello world"
+- echo "Hello world" 
